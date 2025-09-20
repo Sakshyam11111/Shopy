@@ -27,7 +27,7 @@ const Navbar = ({ handleOrderPopup = () => {} }) => {
   const dropdownLinks = [
     { id: 1, name: "Top Rated", link: "/top-rated", icon: "⭐", badge: "Hot", color: "text-red-500" },
     { id: 2, name: "Kids Wear", link: "/kids-wear", icon: "👶", badge: "New", color: "text-blue-500" },
-    { id: 3, name: "Mens Wear", link: "/mens-wear", icon: "👔", badge: "", color: "text-gray-600" },
+    { id: 3, name: "Mens Wear", link: "/mens-wear", icon: "👔", badge: "Sale", color: "text-gray-600" },
     { id: 4, name: "Women Wear", link: "/women-wear", icon: "👗", badge: "Sale", color: "text-purple-500" },
     { id: 5, name: "Electronics", link: "/electronics", icon: "📱", badge: "Tech", color: "text-green-500" },
   ];
@@ -41,7 +41,7 @@ const Navbar = ({ handleOrderPopup = () => {} }) => {
         : 'shadow-lg bg-white/95 backdrop-blur-md border-b border-gray-100/50'
     }`}>
       {/* Top Banner */}
-      <div className="bg-gradient-to-r from-orange-500 via-pink-500 to-purple-500 text-white py-2 px-4">
+      <div className="bg-gradient-to-r from-orange-600 via-orange-500 to-amber-500 text-white py-2 px-4">
         <div className="container mx-auto">
           <div className="flex items-center justify-between text-sm">
             <div className="flex items-center gap-6">
@@ -73,7 +73,7 @@ const Navbar = ({ handleOrderPopup = () => {} }) => {
             <div className="flex items-center gap-3">
               <a href="/" className="flex items-center gap-3 group">
                 <div className="relative">
-                  <div className="w-12 h-12 bg-gradient-to-r from-orange-500 via-pink-500 to-purple-500 rounded-2xl flex items-center justify-center text-white font-black text-xl transition-all duration-300 group-hover:scale-110 group-hover:rotate-12">
+                  <div className="w-12 h-12 bg-gradient-to-r from-orange-600 via-orange-500 to-amber-500 rounded-2xl flex items-center justify-center text-white font-black text-xl transition-all duration-300 group-hover:scale-110 group-hover:rotate-12">
                     S
                   </div>
                   <div className="absolute -inset-2 bg-gradient-to-r from-orange-400/20 via-pink-400/20 to-purple-400/20 rounded-2xl blur opacity-0 group-hover:opacity-100 transition-all duration-300"></div>

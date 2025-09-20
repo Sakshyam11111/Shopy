@@ -1,6 +1,6 @@
 import { FaEnvelope, FaArrowRight, FaCheck } from "react-icons/fa6";
 import { useState } from "react";
-import Banner from "../../assets/website/orange-pattern.jpg";
+import Banner from "../assets/website/orange-pattern.jpg";
 
 const BannerImg = {
     backgroundImage: `url(${Banner})`,

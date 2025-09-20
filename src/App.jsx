@@ -2,8 +2,7 @@ import React from "react";
 import Navbar from "./components/navbar/navbar";
 import AOS from "aos";
 import "aos/dist/aos.css";
-import Testimonials from "./components/Testimonials/Testimonials";
-import Footer from "./components/Footer/Footer";
+import Testimonials from "./components/Testimonials";
 import { Route, BrowserRouter as Router, Routes } from "react-router-dom";
 import TopRated from "./components/category/Toprated";
 import Electronics from "./components/category/Electronics";
@@ -11,10 +10,14 @@ import KidsWear from "./components/category/KidsWear";
 import Menswear from "./components/category/Menswear";
 import Women from "./components/category/Women";
 import Hero from "./components/Hero";
-import Products from "./components/products/products";
-import TopProducts from "./components/TopProducts/TopProducts";
-import Banner from "./components/Banner/Banner";
-import Subscribe from "./components/Subscribe/Subscribe";
+import Products from "./components/products";
+import TopProducts from "./components/TopProducts";
+import Banner from "./components/Banner";
+import Subscribe from "./components/Subscribe";
+import About from "./components/About";
+import Store from "./components/Store";
+import Blog from "./components/Blog";
+import Footer from "./components/Footer";
 
 const App = () => {
   React.useEffect(() => {
@@ -40,6 +43,9 @@ const App = () => {
             <Testimonials />
           </>
         } />
+        <Route path="/about" element={<About />} />
+        <Route path="/store" element={<Store />} />
+        <Route path="/blog" element={<Blog />} />
         <Route path="/top-rated" element={<TopRated />} />
         <Route path="/kids-wear" element={<KidsWear />} />
         <Route path="/mens-wear" element={<Menswear />} />

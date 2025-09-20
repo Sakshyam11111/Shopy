@@ -85,7 +85,7 @@ const Electronics = () => {
       image: productImages.earphone,
       accent: "blue",
       pattern: "dots",
-      price: "From $99",
+      price: "From Rs99",
       rating: 4.8,
       reviews: 2847
     },
@@ -101,7 +101,7 @@ const Electronics = () => {
       image: productImages.watch,
       accent: "yellow",
       pattern: "waves",
-      price: "From $299",
+      price: "From Rs299",
       rating: 4.9,
       reviews: 1923
     },
@@ -118,7 +118,7 @@ const Electronics = () => {
       accent: "red",
       pattern: "grid",
       span: "col-span-1 lg:col-span-2",
-      price: "From $899",
+      price: "From Rs899",
       rating: 4.7,
       reviews: 3521
     },
@@ -135,7 +135,7 @@ const Electronics = () => {
       accent: "gray",
       pattern: "hexagon",
       span: "col-span-1 lg:col-span-2",
-      price: "From $1,299",
+      price: "From Rs1,299",
       rating: 4.9,
       reviews: 4102
     },
@@ -151,7 +151,7 @@ const Electronics = () => {
       image: productImages.vr,
       accent: "green",
       pattern: "triangles",
-      price: "From $399",
+      price: "From Rs399",
       rating: 4.6,
       reviews: 1456
     },
@@ -167,7 +167,7 @@ const Electronics = () => {
       image: productImages.speaker,
       accent: "blue",
       pattern: "circles",
-      price: "From $149",
+      price: "From Rs149",
       rating: 4.5,
       reviews: 987
     },
@@ -183,7 +183,7 @@ const Electronics = () => {
       image: productImages.smartphone,
       accent: "purple",
       pattern: "dots",
-      price: "From $699",
+      price: "From Rs699",
       rating: 4.8,
       reviews: 5234
     },
@@ -199,7 +199,7 @@ const Electronics = () => {
       image: productImages.tablet,
       accent: "cyan",
       pattern: "waves",
-      price: "From $549",
+      price: "From Rs549",
       rating: 4.7,
       reviews: 2134
     },
@@ -216,7 +216,7 @@ const Electronics = () => {
       accent: "orange",
       pattern: "grid",
       span: "col-span-1 lg:col-span-2",
-      price: "From $1,199",
+      price: "From Rs1,199",
       rating: 4.9,
       reviews: 1876
     },
@@ -233,7 +233,7 @@ const Electronics = () => {
       accent: "green",
       pattern: "triangles",
       span: "col-span-1 lg:col-span-2",
-      price: "From $799",
+      price: "From Rs799",
       rating: 4.4,
       reviews: 756
     },
@@ -249,7 +249,7 @@ const Electronics = () => {
       image: productImages.keyboard,
       accent: "rose",
       pattern: "hexagon",
-      price: "From $129",
+      price: "From Rs129",
       rating: 4.6,
       reviews: 1234
     },
@@ -265,7 +265,7 @@ const Electronics = () => {
       image: productImages.mouse,
       accent: "indigo",
       pattern: "circles",
-      price: "From $79",
+      price: "From Rs79",
       rating: 4.3,
       reviews: 892
     }

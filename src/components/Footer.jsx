@@ -24,12 +24,12 @@ const FooterLinks = [
     link: "/#about",
   },
   {
-    title: "Contact",
-    link: "/#contact",
+    title: "Store",
+    link: "/store",
   },
   {
     title: "Blog",
-    link: "/#blog",
+    link: "/blog",
   },
 ];
 
@@ -199,11 +199,11 @@ const Footer = () => {
                 </ul>
               </div>
 
-              {/* Services */}
+              {/* Trending */}
               <div className="footer-animate space-y-6">
                 <h2 className="text-2xl font-bold relative">
                   <span className="bg-gradient-to-r from-orange-400 to-red-400 bg-clip-text text-transparent">
-                    Services
+                    Trending
                   </span>
                   <div className="absolute -bottom-2 left-0 w-16 h-1 bg-gradient-to-r from-orange-500 to-red-500 rounded-full"></div>
                 </h2>
