@@ -19,7 +19,7 @@ import {
   Sparkles
 } from "lucide-react";
 import Aos from "aos";
-import "aos/dist/aos.css"; // Ensure AOS styles are imported
+import "aos/dist/aos.css"; 
 
 // Enhanced product data with fashion categories
 const productData = [
@@ -288,7 +288,7 @@ const CategoryFilter = ({ categories, activeCategory, onCategoryChange }) => (
         className={`px-6 py-2.5 rounded-full font-medium text-sm transition-all duration-300 transform hover:scale-105 ${
           activeCategory === category
             ? 'bg-gradient-to-r from-orange-500 to-amber-500 text-white shadow-lg'
-            : 'bg-white/80 dark:bg-gray-800/80 text-gray-600 dark:text-gray-300 hover:bg-orange-50 dark:hover:bg-gray-700'
+            : 'bg-white/80 text-gray-600 hover:bg-orange-50'
         }`}
       >
         {category}
@@ -343,18 +343,18 @@ const TopRated = () => {
   };
 
   return (
-    <div className="py-20 bg-gradient-to-b from-orange-50/30 to-amber-50/20 dark:from-slate-900/95 dark:to-slate-800/95 min-h-screen">
+    <div className="py-20 bg-gradient-to-b from-orange-50/30 to-amber-50/20 min-h-screen">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section Header */}
         <div data-aos="fade-up" className="text-center mb-12">
-          <div className="inline-flex items-center gap-2 px-4 py-1.5 bg-orange-100/50 dark:bg-orange-900/20 rounded-full mb-3">
+          <div className="inline-flex items-center gap-2 px-4 py-1.5 bg-orange-100/50 rounded-full mb-3">
             <Flame className="w-4 h-4 text-orange-500" />
-            <span className="text-sm font-medium text-orange-600 dark:text-orange-300">Top Collection</span>
+            <span className="text-sm font-medium text-orange-600">Top Collection</span>
           </div>
-          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-gray-900 dark:text-white mb-3">
+          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-gray-900 mb-3">
             Best Selling <span className="text-orange-500">Products</span>
           </h2>
-          <p className="text-lg text-gray-600 dark:text-gray-300 max-w-2xl mx-auto mb-6">
+          <p className="text-lg text-gray-600 max-w-2xl mx-auto mb-6">
             Discover our top-rated electronics and fashion items trusted by thousands of customers
           </p>
           
@@ -389,11 +389,11 @@ const TopRated = () => {
               key={index} 
               data-aos="fade-up" 
               data-aos-delay={`${400 + index * 100}`}
-              className="bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm rounded-2xl p-4 text-center border border-orange-100 dark:border-gray-700"
+              className="bg-white/80 backdrop-blur-sm rounded-2xl p-4 text-center border border-orange-100"
             >
               <stat.icon className="w-6 h-6 text-orange-500 mx-auto mb-2" />
-              <div className="text-2xl font-bold text-gray-900 dark:text-white">{stat.value}</div>
-              <div className="text-sm text-gray-600 dark:text-gray-300">{stat.label}</div>
+              <div className="text-2xl font-bold text-gray-900">{stat.value}</div>
+              <div className="text-sm text-gray-600">{stat.label}</div>
             </div>
           ))}
         </div>
@@ -413,7 +413,7 @@ const TopRated = () => {
                 relative h-[420px] rounded-3xl overflow-hidden
                 bg-gradient-to-br ${product.bgGradient}
                 transform transition-all duration-500 hover:scale-[1.03] hover:-translate-y-2
-                shadow-lg hover:shadow-2xl dark:shadow-gray-800
+                shadow-lg hover:shadow-2xl
                 ${hoveredCard === product.id ? 'shadow-orange-400/30' : ''}
                 border border-white/10
               `}>
@@ -438,10 +438,10 @@ const TopRated = () => {
 
                 {/* Category & Rating Badge */}
                 <div className="absolute top-4 right-4 flex flex-col gap-2 items-end">
-                  <div className="bg-white/90 dark:bg-gray-800/90 backdrop-blur-sm text-gray-800 dark:text-gray-200 px-3 py-1 rounded-full text-xs font-medium shadow-md">
+                  <div className="bg-white/90 backdrop-blur-sm text-gray-800 px-3 py-1 rounded-full text-xs font-medium shadow-md">
                     {product.category}
                   </div>
-                  <div className="bg-white/90 dark:bg-gray-800/90 backdrop-blur-sm text-gray-800 dark:text-gray-200 px-2.5 py-1 rounded-full text-xs font-medium flex items-center gap-1 shadow-md">
+                  <div className="bg-white/90 backdrop-blur-sm text-gray-800 px-2.5 py-1 rounded-full text-xs font-medium flex items-center gap-1 shadow-md">
                     <Star className="w-3.5 h-3.5 text-yellow-400 fill-current" />
                     {product.rating}
                   </div>
@@ -527,7 +527,7 @@ const TopRated = () => {
 
         {/* Enhanced Bottom CTA Section */}
         <div data-aos="fade-up" data-aos-delay="600" className="text-center mt-16">
-          <div className="inline-flex flex-col sm:flex-row items-center gap-4 bg-gradient-to-r from-white/90 to-orange-50/90 dark:from-gray-800/90 dark:to-gray-700/90 backdrop-blur-sm px-8 py-6 rounded-2xl shadow-xl border border-orange-200/50 dark:border-orange-800/30">
+          <div className="inline-flex flex-col sm:flex-row items-center gap-4 bg-gradient-to-r from-white/90 to-orange-50/90 px-8 py-6 rounded-2xl shadow-xl border border-orange-200/50">
             <div className="flex items-center gap-3">
               <div className="flex -space-x-2">
                 <div className="w-10 h-10 bg-orange-500 rounded-full flex items-center justify-center text-white font-bold shadow-lg">
@@ -541,10 +541,10 @@ const TopRated = () => {
                 </div>
               </div>
               <div className="text-left">
-                <p className="text-lg font-bold text-gray-800 dark:text-gray-200">
+                <p className="text-lg font-bold text-gray-800">
                   Discover More Amazing Products
                 </p>
-                <p className="text-sm text-gray-600 dark:text-gray-300">
+                <p className="text-sm text-gray-600">
                   Join thousands of happy customers
                 </p>
               </div>

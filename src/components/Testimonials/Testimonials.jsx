@@ -64,18 +64,18 @@ const Testimonials = () => {
     };
 
     return (
-        <div className="py-16 bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-100 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900">
+        <div className="py-16 bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-100">
             <div className="container mx-auto px-4 max-w-6xl">
                 {/* Header Section */}
                 <div className="text-center max-w-3xl mx-auto mb-16">
-                    <div className="inline-flex items-center gap-2 bg-blue-100 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400 px-4 py-2 rounded-full text-sm font-medium mb-4">
+                    <div className="inline-flex items-center gap-2 bg-blue-100 text-blue-600 px-4 py-2 rounded-full text-sm font-medium mb-4">
                         <Star className="w-4 h-4 fill-current" />
                         Customer Stories
                     </div>
-                    <h2 className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-gray-900 to-gray-600 dark:from-white dark:to-gray-300 bg-clip-text text-transparent mb-6">
+                    <h2 className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-gray-900 to-gray-600 bg-clip-text text-transparent mb-6">
                         What Our Clients Say
                     </h2>
-                    <p className="text-lg text-gray-600 dark:text-gray-300 leading-relaxed">
+                    <p className="text-lg text-gray-600 leading-relaxed">
                         Don't just take our word for it. Here's what our amazing clients have to say about their experience working with us.
                     </p>
                 </div>
@@ -93,12 +93,12 @@ const Testimonials = () => {
                         >
                             {TestimonialData.map((testimonial) => (
                                 <div key={testimonial.id} className="w-full flex-shrink-0 px-4">
-                                    <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-xl hover:shadow-2xl transition-all duration-300 p-8 md:p-12 mx-auto max-w-4xl relative overflow-hidden">
+                                    <div className="bg-white rounded-2xl shadow-xl hover:shadow-2xl transition-all duration-300 p-8 md:p-12 mx-auto max-w-4xl relative overflow-hidden">
                                         {/* Background Pattern */}
                                         <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-br from-blue-500/10 to-purple-500/10 rounded-full -translate-y-16 translate-x-16"></div>
                                         
                                         {/* Quote Icon */}
-                                        <div className="absolute top-8 left-8 text-blue-500/20 dark:text-blue-400/20">
+                                        <div className="absolute top-8 left-8 text-blue-500/20">
                                             <Quote className="w-12 h-12 fill-current" />
                                         </div>
 
@@ -111,7 +111,7 @@ const Testimonials = () => {
                                             </div>
 
                                             {/* Testimonial Text */}
-                                            <blockquote className="text-xl md:text-2xl leading-relaxed text-gray-700 dark:text-gray-200 mb-8 font-medium">
+                                            <blockquote className="text-xl md:text-2xl leading-relaxed text-gray-700 mb-8 font-medium">
                                                 "{testimonial.text}"
                                             </blockquote>
 
@@ -121,18 +121,18 @@ const Testimonials = () => {
                                                     <img 
                                                         src={testimonial.img} 
                                                         alt={testimonial.name}
-                                                        className="w-16 h-16 rounded-full object-cover ring-4 ring-white dark:ring-gray-700 shadow-lg"
+                                                        className="w-16 h-16 rounded-full object-cover ring-4 ring-white shadow-lg"
                                                         onError={(e) => {
                                                             e.target.src = `https://ui-avatars.com/api/?name=${testimonial.name}&background=6366f1&color=fff&size=64`;
                                                         }}
                                                     />
-                                                    <div className="absolute -bottom-1 -right-1 w-6 h-6 bg-green-500 rounded-full border-2 border-white dark:border-gray-800"></div>
+                                                    <div className="absolute -bottom-1 -right-1 w-6 h-6 bg-green-500 rounded-full border-2 border-white"></div>
                                                 </div>
                                                 <div>
-                                                    <h3 className="text-lg font-bold text-gray-900 dark:text-white">
+                                                    <h3 className="text-lg font-bold text-gray-900">
                                                         {testimonial.name}
                                                     </h3>
-                                                    <p className="text-blue-600 dark:text-blue-400 font-medium">
+                                                    <p className="text-blue-600 font-medium">
                                                         {testimonial.role}
                                                     </p>
                                                 </div>
@@ -147,13 +147,13 @@ const Testimonials = () => {
                     {/* Navigation Arrows */}
                     <button
                         onClick={prevSlide}
-                        className="absolute left-4 top-1/2 -translate-y-1/2 w-12 h-12 bg-white dark:bg-gray-800 rounded-full shadow-lg hover:shadow-xl transition-all duration-200 flex items-center justify-center text-gray-600 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 group"
+                        className="absolute left-4 top-1/2 -translate-y-1/2 w-12 h-12 bg-white rounded-full shadow-lg hover:shadow-xl transition-all duration-200 flex items-center justify-center text-gray-600 hover:text-blue-600 group"
                     >
                         <ChevronLeft className="w-6 h-6 group-hover:scale-110 transition-transform" />
                     </button>
                     <button
                         onClick={nextSlide}
-                        className="absolute right-4 top-1/2 -translate-y-1/2 w-12 h-12 bg-white dark:bg-gray-800 rounded-full shadow-lg hover:shadow-xl transition-all duration-200 flex items-center justify-center text-gray-600 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 group"
+                        className="absolute right-4 top-1/2 -translate-y-1/2 w-12 h-12 bg-white rounded-full shadow-lg hover:shadow-xl transition-all duration-200 flex items-center justify-center text-gray-600 hover:text-blue-600 group"
                     >
                         <ChevronRight className="w-6 h-6 group-hover:scale-110 transition-transform" />
                     </button>
@@ -168,25 +168,25 @@ const Testimonials = () => {
                             className={`w-3 h-3 rounded-full transition-all duration-200 ${
                                 index === currentSlide 
                                     ? 'bg-blue-600 w-8' 
-                                    : 'bg-gray-300 dark:bg-gray-600 hover:bg-gray-400 dark:hover:bg-gray-500'
+                                    : 'bg-gray-300 hover:bg-gray-400'
                             }`}
                         />
                     ))}
                 </div>
 
                 {/* Stats Section */}
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mt-16 pt-16 border-t border-gray-200 dark:border-gray-700">
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mt-16 pt-16 border-t border-gray-200">
                     <div className="text-center">
-                        <div className="text-3xl font-bold text-blue-600 dark:text-blue-400 mb-2">500+</div>
-                        <div className="text-gray-600 dark:text-gray-300">Happy Clients</div>
+                        <div className="text-3xl font-bold text-blue-600 mb-2">500+</div>
+                        <div className="text-gray-600">Happy Clients</div>
                     </div>
                     <div className="text-center">
-                        <div className="text-3xl font-bold text-blue-600 dark:text-blue-400 mb-2">98%</div>
-                        <div className="text-gray-600 dark:text-gray-300">Satisfaction Rate</div>
+                        <div className="text-3xl font-bold text-blue-600 mb-2">98%</div>
+                        <div className="text-gray-600">Satisfaction Rate</div>
                     </div>
                     <div className="text-center">
-                        <div className="text-3xl font-bold text-blue-600 dark:text-blue-400 mb-2">5.0</div>
-                        <div className="text-gray-600 dark:text-gray-300">Average Rating</div>
+                        <div className="text-3xl font-bold text-blue-600 mb-2">5.0</div>
+                        <div className="text-gray-600">Average Rating</div>
                     </div>
                 </div>
             </div>

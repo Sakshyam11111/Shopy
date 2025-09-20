@@ -89,29 +89,29 @@ const Products = () => {
       {[...Array(5)].map((_, index) => (
         <FaStar
           key={index}
-          className={`Rs{
+          className={`${
             size === "sm" ? "w-3 h-3" : "w-4 h-4"
-          } Rs{
+          } ${
             index < Math.floor(rating) 
               ? 'text-amber-400 fill-current' 
               : 'text-gray-300'
-          } Rs{index === Math.floor(rating) && rating % 1 >= 0.5 ? 'text-amber-400 fill-current' : ''}`}
+          } ${index === Math.floor(rating) && rating % 1 >= 0.5 ? 'text-amber-400 fill-current' : ''}`}
         />
       ))}
-      <span className={`text-xs Rs{size === "sm" ? "text-gray-500" : "text-gray-600 dark:text-gray-400"}`}>
+      <span className={`text-xs ${size === "sm" ? "text-gray-500" : "text-gray-600"}`}>
         ({rating})
       </span>
     </div>
   );
 
   return (
-    <section className="py-20 bg-gradient-to-br from-orange-50/50 via-white to-amber-50/20 dark:from-gray-900/30 dark:via-gray-800 dark:to-gray-900/30">
+    <section className="py-20 bg-gradient-to-br from-orange-50/50 via-white to-amber-50/20">
       <div className="container mx-auto px-4">
         {/* Header Section */}
         <div className="text-center mb-16 max-w-4xl mx-auto">
           <div 
             data-aos="fade-up"
-            className="inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-orange-500/10 to-amber-500/10 text-orange-700 dark:from-orange-500/20 dark:to-amber-500/20 dark:text-orange-300 rounded-full border border-orange-200/50 dark:border-orange-800/50 mb-6 shadow-lg"
+            className="inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-orange-500/10 to-amber-500/10 text-orange-700 rounded-full border border-orange-200/50 mb-6 shadow-lg"
           >
             <FaTag className="w-4 h-4" />
             <span className="text-sm font-semibold">Top Selling Products</span>
@@ -120,7 +120,7 @@ const Products = () => {
           <h2 
             data-aos="fade-up"
             data-aos-delay="100"
-            className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-gray-900 via-orange-600 to-amber-600 dark:from-white dark:via-orange-400 dark:to-amber-400 bg-clip-text text-transparent mb-4"
+            className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-gray-900 via-orange-600 to-amber-600 bg-clip-text text-transparent mb-4"
           >
             Featured Collection
           </h2>
@@ -128,7 +128,7 @@ const Products = () => {
           <p 
             data-aos="fade-up"
             data-aos-delay="200"
-            className="text-gray-600 dark:text-gray-400 text-lg leading-relaxed max-w-2xl mx-auto"
+            className="text-gray-600 text-lg leading-relaxed max-w-2xl mx-auto"
           >
             Discover our curated selection of premium fashion items designed to elevate your wardrobe with timeless style and modern elegance
           </p>
@@ -141,47 +141,44 @@ const Products = () => {
               key={product.id}
               data-aos="fade-up"
               data-aos-delay={product.aosDelay}
-              className="group relative bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm rounded-2xl overflow-hidden shadow-lg hover:shadow-xl transition-all duration-500 transform hover:-translate-y-2 border border-gray-100/50 dark:border-gray-700/50 max-w-sm mx-auto"
+              className="group relative bg-white/80 backdrop-blur-sm rounded-2xl overflow-hidden shadow-lg hover:shadow-xl transition-all duration-500 transform hover:-translate-y-2 border border-gray-100/50 max-w-sm mx-auto"
             >
               {/* Product Image Container */}
               <div 
-                className="relative h-64 overflow-hidden bg-gradient-to-br from-orange-50/70 to-white/50 dark:from-gray-900/30 dark:to-gray-800/30"
+                className="relative h-64 overflow-hidden bg-gradient-to-br from-orange-50/70 to-white/50"
                 onMouseEnter={() => setHoveredProduct(product.id)}
                 onMouseLeave={() => setHoveredProduct(null)}
               >
                 {/* Badges */}
                 <div className="absolute top-3 left-3 z-10 flex flex-col gap-2">
                   {product.isNew && (
-                    <span className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-gradient-to-r from-orange-500 to-amber-500 text-white text-xs font-bold rounded-full shadow-lg">
-                      <FaCircle className="w-1.5 h-1.5 fill-current" />
-                      New
+                    <span className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-gradient-to-r from-green-500 to-emerald-500 text-white text-xs font-semibold rounded-full shadow-lg">
+                      <FaCircle className="w-2 h-2" />
+                      New Arrival
                     </span>
                   )}
                   {product.isTrending && (
-                    <span className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-gradient-to-r from-orange-500 to-amber-500 text-white text-xs font-bold rounded-full shadow-lg">
-                      <FaStar className="w-3 h-3 fill-current" />
+                    <span className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-gradient-to-r from-orange-500 to-amber-500 text-white text-xs font-semibold rounded-full shadow-lg">
+                      <FaStar className="w-3 h-3" />
                       Trending
                     </span>
                   )}
                 </div>
 
                 {/* Quick Actions */}
-                <div className="absolute top-3 right-3 z-10 flex flex-col gap-2 opacity-0 group-hover:opacity-100 transition-all duration-300 transform translate-y-2 group-hover:translate-y-0">
+                <div className={`absolute top-3 right-3 z-10 flex flex-col gap-2 transition-opacity duration-300 ${hoveredProduct === product.id ? 'opacity-100' : 'opacity-0'}`}>
                   <button
                     onClick={() => toggleWishlist(product.id)}
-                    className="p-2.5 bg-white/95 dark:bg-gray-900/95 backdrop-blur-sm rounded-full shadow-lg hover:bg-orange-500 hover:text-white transition-all duration-200 transform hover:scale-110"
+                    className="p-2 bg-white/90 rounded-full shadow-lg hover:bg-orange-500 hover:text-white transition-all duration-200 transform hover:scale-110"
                   >
                     {wishlist[product.id] ? (
-                      <FaHeart className="w-4 h-4 fill-current" />
+                      <FaHeart className="w-4 h-4 text-red-500" />
                     ) : (
-                      <FaRegHeart className="w-4 h-4" />
+                      <FaRegHeart className="w-4 h-4 text-gray-600" />
                     )}
                   </button>
-                  <button className="p-2.5 bg-white/95 dark:bg-gray-900/95 backdrop-blur-sm rounded-full shadow-lg hover:bg-orange-500 hover:text-white transition-all duration-200 transform hover:scale-110">
-                    <FaEye className="w-4 h-4" />
-                  </button>
-                  <button className="p-2.5 bg-white/95 dark:bg-gray-900/95 backdrop-blur-sm rounded-full shadow-lg hover:bg-orange-500 hover:text-white transition-all duration-200 transform hover:scale-110">
-                    <FaShoppingCart className="w-4 h-4" />
+                  <button className="p-2 bg-white/90 rounded-full shadow-lg hover:bg-blue-500 hover:text-white transition-all duration-200 transform hover:scale-110">
+                    <FaEye className="w-4 h-4 text-gray-600" />
                   </button>
                 </div>
 
@@ -189,50 +186,42 @@ const Products = () => {
                 <img
                   src={product.img}
                   alt={product.title}
-                  className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+                  className="w-full h-full object-contain transition-transform duration-500 group-hover:scale-110"
                 />
 
-                {/* Color Options - Show on hover */}
-                {hoveredProduct === product.id && (
-                  <div className="absolute bottom-4 left-4 right-4 flex justify-center gap-2 opacity-100 transition-all duration-300">
-                    <div className="flex items-center gap-1.5 bg-white/90 dark:bg-gray-900/90 backdrop-blur-sm px-3 py-2 rounded-full shadow-lg">
-                      {product.colors.map((color, colorIndex) => (
-                        <button
-                          key={colorIndex}
-                          className="w-6 h-6 rounded-full border-2 border-white/70 shadow-sm hover:scale-110 transition-transform duration-200 relative overflow-hidden"
-                          style={{ backgroundColor: color }}
-                        >
-                          {colorIndex === 0 && (
-                            <div className="absolute inset-0 bg-white/20 rounded-full"></div>
-                          )}
-                        </button>
-                      ))}
-                    </div>
-                  </div>
-                )}
+                {/* Color Options */}
+                <div className={`absolute bottom-3 left-3 right-3 flex justify-center gap-2 transition-opacity duration-300 ${hoveredProduct === product.id ? 'opacity-100' : 'opacity-0'}`}>
+                  {product.colors.map((color, index) => (
+                    <button
+                      key={index}
+                      className="w-5 h-5 rounded-full border-2 border-white/50 shadow-sm hover:scale-110 transition-transform duration-200"
+                      style={{ backgroundColor: color }}
+                    />
+                  ))}
+                </div>
               </div>
 
               {/* Product Details */}
               <div className="p-5">
                 {/* Category */}
-                <p className="text-xs text-orange-600 dark:text-orange-400 uppercase tracking-wider font-medium mb-2">
+                <p className="text-xs text-orange-600 uppercase tracking-wider font-medium mb-2">
                   {product.category}
                 </p>
 
                 {/* Title */}
-                <h3 className="text-lg font-bold text-gray-900 dark:text-white mb-2 line-clamp-2 group-hover:text-orange-600 transition-colors duration-200">
+                <h3 className="text-lg font-bold text-gray-900 mb-2 line-clamp-2 group-hover:text-orange-600 transition-colors duration-200">
                   {product.title}
                 </h3>
 
                 {/* Price */}
                 <div className="flex items-center gap-3 mb-3">
-                  <span className="text-xl font-bold text-gray-900 dark:text-white">
+                  <span className="text-xl font-bold text-gray-900">
                     Rs{product.price}
                   </span>
                   <span className="text-sm text-gray-400 line-through">
                     Rs{product.originalPrice}
                   </span>
-                  <span className="inline-flex items-center gap-1 px-2 py-1 bg-orange-100 text-orange-600 dark:bg-orange-900/30 dark:text-orange-400 text-xs font-medium rounded-full">
+                  <span className="inline-flex items-center gap-1 px-2 py-1 bg-orange-100 text-orange-600 text-xs font-medium rounded-full">
                     -25%
                   </span>
                 </div>
@@ -240,19 +229,19 @@ const Products = () => {
                 {/* Rating & Reviews */}
                 <div className="flex items-center justify-between mb-4">
                   <StarRating rating={product.rating} size="sm" />
-                  <span className="text-xs text-gray-500 dark:text-gray-400 flex items-center gap-1">
+                  <span className="text-xs text-gray-500 flex items-center gap-1">
                     {product.reviews} reviews
                   </span>
                 </div>
 
                 {/* Color Indicator */}
                 <div className="flex items-center gap-2 mb-4">
-                  <span className="text-xs text-gray-500 dark:text-gray-400">Color:</span>
+                  <span className="text-xs text-gray-500">Color:</span>
                   <div 
-                    className="w-4 h-4 rounded-full border-2 border-gray-200 dark:border-gray-600"
+                    className="w-4 h-4 rounded-full border-2 border-gray-200"
                     style={{ backgroundColor: product.color === "white" ? "#FFFFFF" : product.color === "red" ? "#EF4444" : product.color === "brown" ? "#92400E" : "#FBBF24" }}
                   ></div>
-                  <span className="text-xs text-gray-600 dark:text-gray-400 capitalize">{product.color}</span>
+                  <span className="text-xs text-gray-600 capitalize">{product.color}</span>
                 </div>
 
                 {/* Action Button */}
@@ -267,7 +256,7 @@ const Products = () => {
 
         {/* View All Button */}
         <div className="text-center mt-16">
-          <button className="group inline-flex items-center gap-3 px-8 py-4 bg-white dark:bg-gray-800 border-2 border-gray-200 dark:border-gray-700 rounded-full text-gray-700 dark:text-gray-300 font-semibold hover:bg-gradient-to-r hover:from-orange-500 hover:to-amber-600 hover:text-white hover:border-transparent transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl">
+          <button className="group inline-flex items-center gap-3 px-8 py-4 bg-white border-2 border-gray-200 rounded-full text-gray-700 font-semibold hover:bg-gradient-to-r hover:from-orange-500 hover:to-amber-600 hover:text-white hover:border-transparent transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl">
             <span>View All Products</span>
             <svg className="w-5 h-5 group-hover:translate-x-1 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
@@ -277,21 +266,21 @@ const Products = () => {
 
         {/* Stats Section */}
         <div className="mt-20 grid grid-cols-1 md:grid-cols-4 gap-6">
-          <div className="text-center p-6 bg-gradient-to-br from-orange-500/10 to-amber-500/10 rounded-2xl border border-orange-200/30 dark:border-orange-800/30">
-            <div className="text-3xl font-bold text-orange-600 dark:text-orange-400 mb-2">1K+</div>
-            <div className="text-sm text-gray-600 dark:text-gray-400">Happy Customers</div>
+          <div className="text-center p-6 bg-gradient-to-br from-orange-500/10 to-amber-500/10 rounded-2xl border border-orange-200/30">
+            <div className="text-3xl font-bold text-orange-600 mb-2">1K+</div>
+            <div className="text-sm text-gray-600">Happy Customers</div>
           </div>
-          <div className="text-center p-6 bg-gradient-to-br from-green-500/10 to-emerald-500/10 rounded-2xl border border-green-200/30 dark:border-green-800/30">
-            <div className="text-3xl font-bold text-green-600 dark:text-green-400 mb-2">500+</div>
-            <div className="text-sm text-gray-600 dark:text-gray-400">Premium Products</div>
+          <div className="text-center p-6 bg-gradient-to-br from-green-500/10 to-emerald-500/10 rounded-2xl border border-green-200/30">
+            <div className="text-3xl font-bold text-green-600 mb-2">500+</div>
+            <div className="text-sm text-gray-600">Premium Products</div>
           </div>
-          <div className="text-center p-6 bg-gradient-to-br from-orange-500/10 to-amber-500/10 rounded-2xl border border-orange-200/30 dark:border-orange-800/30">
-            <div className="text-3xl font-bold text-orange-600 dark:text-orange-400 mb-2">98%</div>
-            <div className="text-sm text-gray-600 dark:text-gray-400">Satisfaction Rate</div>
+          <div className="text-center p-6 bg-gradient-to-br from-orange-500/10 to-amber-500/10 rounded-2xl border border-orange-200/30">
+            <div className="text-3xl font-bold text-orange-600 mb-2">98%</div>
+            <div className="text-sm text-gray-600">Satisfaction Rate</div>
           </div>
-          <div className="text-center p-6 bg-gradient-to-br from-orange-500/10 to-amber-500/10 rounded-2xl border border-orange-200/30 dark:border-orange-800/30">
-            <div className="text-3xl font-bold text-orange-600 dark:text-orange-400 mb-2">24/7</div>
-            <div className="text-sm text-gray-600 dark:text-gray-400">Customer Support</div>
+          <div className="text-center p-6 bg-gradient-to-br from-orange-500/10 to-amber-500/10 rounded-2xl border border-orange-200/30">
+            <div className="text-3xl font-bold text-orange-600 mb-2">24/7</div>
+            <div className="text-sm text-gray-600">Customer Support</div>
           </div>
         </div>
       </div>
