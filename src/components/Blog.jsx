@@ -22,18 +22,6 @@ const Blog = () => {
   const [searchQuery, setSearchQuery] = useState('');
   const [filteredPosts, setFilteredPosts] = useState([]);
 
-  // Initialize AOS
-  useEffect(() => {
-    if (typeof window !== "undefined" && window.AOS) {
-      window.AOS.init({
-        duration: 800,
-        easing: "ease-out-cubic",
-        once: true,
-        offset: 100,
-      });
-    }
-  }, []);
-
   const categories = ['All', 'Fashion', 'Technology', 'Lifestyle', 'Travel', 'Health', 'Business'];
 
   const blogPosts = [
@@ -205,44 +193,44 @@ const Blog = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-orange-50 via-white to-amber-50">
+    <div className="min-h-screen bg-gradient-to-br from-orange-50 via-white to-amber-50 overflow-x-hidden">
       {/* Hero Section */}
-      <div className="relative bg-gradient-to-r from-orange-600 via-orange-500 to-amber-500 text-white py-24" data-aos="fade">
-        <div className="absolute inset-0 overflow-hidden">
-          <div className="absolute top-20 left-20 w-72 h-72 bg-white/10 rounded-full blur-3xl animate-pulse" data-aos="zoom-in" data-aos-delay="100"></div>
-          <div className="absolute bottom-20 right-20 w-96 h-96 bg-white/10 rounded-full blur-3xl animate-pulse delay-1000" data-aos="zoom-in" data-aos-delay="200"></div>
+      <div className="relative bg-gradient-to-r from-orange-600 via-orange-500 to-amber-500 text-white py-12 md:py-24 overflow-hidden">
+        <div className="absolute inset-0">
+          <div className="absolute top-10 left-10 md:top-20 md:left-20 w-48 h-48 md:w-72 md:h-72 bg-white/10 rounded-full blur-3xl animate-pulse"></div>
+          <div className="absolute bottom-10 right-10 md:bottom-20 md:right-20 w-64 h-64 md:w-96 md:h-96 bg-white/10 rounded-full blur-3xl animate-pulse delay-1000"></div>
         </div>
 
-        <div className="container mx-auto px-4 relative z-10">
+        <div className="container mx-auto px-4 relative z-10 max-w-7xl">
           <div className="text-center max-w-4xl mx-auto">
-            <div className="inline-block mb-6" data-aos="fade-down" data-aos-delay="300">
-              <span className="px-6 py-3 bg-white/20 backdrop-blur-sm rounded-full font-semibold">
+            <div className="inline-block mb-4 md:mb-6">
+              <span className="px-4 md:px-6 py-2 md:py-3 bg-white/20 backdrop-blur-sm rounded-full font-semibold text-sm md:text-base">
                 📝 Latest Stories
               </span>
             </div>
             
-            <h1 className="text-5xl md:text-7xl font-black mb-6 leading-tight" data-aos="fade-up" data-aos-delay="400">
+            <h1 className="text-3xl md:text-5xl lg:text-7xl font-black mb-4 md:mb-6 leading-tight">
               Insights & 
               <span className="block bg-gradient-to-r from-yellow-200 to-amber-200 bg-clip-text text-transparent">
                 Inspiration
               </span>
             </h1>
             
-            <p className="text-xl md:text-2xl text-white/90 mb-8" data-aos="fade-up" data-aos-delay="500">
+            <p className="text-lg md:text-xl lg:text-2xl text-white/90 mb-6 md:mb-8 px-4">
               Discover stories that matter, trends that inspire, and ideas that transform
             </p>
 
             {/* Search Bar */}
-            <div className="max-w-2xl mx-auto" data-aos="fade-up" data-aos-delay="600">
+            <div className="max-w-2xl mx-auto px-4">
               <div className="relative">
                 <input
                   type="text"
                   placeholder="Search articles, topics, or authors..."
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
-                  className="w-full px-6 py-4 pl-14 bg-white/95 backdrop-blur-sm text-gray-800 rounded-2xl text-lg focus:outline-none focus:ring-4 focus:ring-white/30 transition-all duration-300"
+                  className="w-full px-4 md:px-6 py-3 md:py-4 pl-12 md:pl-14 bg-white/95 backdrop-blur-sm text-gray-800 rounded-2xl text-base md:text-lg focus:outline-none focus:ring-4 focus:ring-white/30 transition-all duration-300"
                 />
-                <Search className="absolute left-5 top-1/2 transform -translate-y-1/2 text-gray-500 w-6 h-6" />
+                <Search className="absolute left-4 md:left-5 top-1/2 transform -translate-y-1/2 text-gray-500 w-5 h-5 md:w-6 md:h-6" />
               </div>
             </div>
           </div>
@@ -250,16 +238,16 @@ const Blog = () => {
       </div>
 
       {/* Featured Posts */}
-      <div className="py-16 bg-white" data-aos="fade">
-        <div className="container mx-auto px-4">
-          <div className="flex items-center justify-between mb-12">
-            <div data-aos="fade-right" data-aos-delay="100">
-              <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-2">
+      <div className="py-12 md:py-16 bg-white">
+        <div className="container mx-auto px-4 max-w-7xl">
+          <div className="flex flex-col md:flex-row md:items-center justify-between mb-8 md:mb-12 gap-4">
+            <div>
+              <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold text-gray-900 mb-2">
                 Featured Stories
               </h2>
-              <p className="text-gray-600">Hand-picked articles from our editorial team</p>
+              <p className="text-gray-600 text-sm md:text-base">Hand-picked articles from our editorial team</p>
             </div>
-            <div className="hidden md:block" data-aos="fade-left" data-aos-delay="200">
+            <div className="hidden md:block">
               <span className="inline-flex items-center gap-2 px-4 py-2 bg-orange-100 text-orange-600 rounded-full text-sm font-semibold">
                 <Star className="w-4 h-4 fill-current" />
                 Editor's Choice
@@ -267,19 +255,17 @@ const Blog = () => {
             </div>
           </div>
 
-          <div className="grid lg:grid-cols-3 gap-8">
+          <div className="grid lg:grid-cols-3 gap-6 md:gap-8">
             {featuredPosts.slice(0, 3).map((post, index) => (
               <div
                 key={post.id}
                 className={`group relative ${
                   index === 0 ? 'lg:col-span-2 lg:row-span-2' : ''
                 }`}
-                data-aos={index === 0 ? "fade-up" : "fade-up"}
-                data-aos-delay={`${300 + index * 100}`}
               >
                 <article className="bg-white rounded-3xl shadow-lg hover:shadow-2xl transition-all duration-500 overflow-hidden h-full">
                   <div className={`relative ${
-                    index === 0 ? 'h-80 lg:h-96' : 'h-64'
+                    index === 0 ? 'h-64 md:h-80 lg:h-96' : 'h-48 md:h-64'
                   } overflow-hidden`}>
                     <img
                       src={post.image}
@@ -289,7 +275,7 @@ const Blog = () => {
                     <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent"></div>
                     
                     {/* Category Badge */}
-                    <div className="absolute top-4 left-4" data-aos="fade-down" data-aos-delay={`${400 + index * 100}`}>
+                    <div className="absolute top-4 left-4">
                       <span className="bg-orange-500 text-white px-3 py-1 rounded-full text-sm font-bold">
                         {post.category}
                       </span>
@@ -297,62 +283,62 @@ const Blog = () => {
 
                     {/* Quick Actions */}
                     <div className="absolute top-4 right-4 flex gap-2">
-                      <button className="w-10 h-10 bg-white/90 hover:bg-orange-500 text-gray-600 hover:text-white rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-300 shadow-lg" data-aos="fade-left" data-aos-delay={`${500 + index * 100}`}>
-                        <Bookmark className="w-5 h-5" />
+                      <button className="w-8 h-8 md:w-10 md:h-10 bg-white/90 hover:bg-orange-500 text-gray-600 hover:text-white rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-300 shadow-lg">
+                        <Bookmark className="w-4 h-4 md:w-5 md:h-5" />
                       </button>
-                      <button className="w-10 h-10 bg-white/90 hover:bg-orange-500 text-gray-600 hover:text-white rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-300 delay-75 shadow-lg" data-aos="fade-left" data-aos-delay={`${550 + index * 100}`}>
-                        <Share2 className="w-5 h-5" />
+                      <button className="w-8 h-8 md:w-10 md:h-10 bg-white/90 hover:bg-orange-500 text-gray-600 hover:text-white rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-300 delay-75 shadow-lg">
+                        <Share2 className="w-4 h-4 md:w-5 md:h-5" />
                       </button>
                     </div>
                   </div>
 
-                  <div className="p-6 lg:p-8" data-aos="fade-up" data-aos-delay={`${600 + index * 100}`}>
-                    <div className="flex items-center gap-4 text-sm text-gray-500 mb-4">
+                  <div className="p-4 md:p-6 lg:p-8">
+                    <div className="flex flex-wrap items-center gap-2 md:gap-4 text-xs md:text-sm text-gray-500 mb-4">
                       <div className="flex items-center gap-2">
                         <img
                           src={post.authorImage}
                           alt={post.author}
-                          className="w-8 h-8 rounded-full"
+                          className="w-6 h-6 md:w-8 md:h-8 rounded-full"
                         />
-                        <span>{post.author}</span>
+                        <span className="truncate">{post.author}</span>
                       </div>
                       <div className="flex items-center gap-2">
-                        <Calendar className="w-4 h-4" />
-                        <span>{formatDate(post.date)}</span>
+                        <Calendar className="w-3 h-3 md:w-4 md:h-4 flex-shrink-0" />
+                        <span className="truncate">{formatDate(post.date)}</span>
                       </div>
                       <div className="flex items-center gap-2">
-                        <Clock className="w-4 h-4" />
+                        <Clock className="w-3 h-3 md:w-4 md:h-4 flex-shrink-0" />
                         <span>{post.readTime}</span>
                       </div>
                     </div>
 
-                    <h3 className={`font-bold text-gray-900 mb-4 group-hover:text-orange-600 transition-colors ${
-                      index === 0 ? 'text-2xl lg:text-3xl' : 'text-xl'
+                    <h3 className={`font-bold text-gray-900 mb-3 md:mb-4 group-hover:text-orange-600 transition-colors line-clamp-3 ${
+                      index === 0 ? 'text-xl md:text-2xl lg:text-3xl' : 'text-lg md:text-xl'
                     }`}>
                       {post.title}
                     </h3>
 
-                    <p className="text-gray-600 mb-6 leading-relaxed">
+                    <p className="text-gray-600 mb-4 md:mb-6 leading-relaxed line-clamp-3 text-sm md:text-base">
                       {post.excerpt}
                     </p>
 
-                    <div className="flex items-center justify-between">
-                      <div className="flex items-center gap-4 text-sm text-gray-500">
+                    <div className="flex items-center justify-between gap-4">
+                      <div className="flex items-center gap-3 md:gap-4 text-xs md:text-sm text-gray-500 min-w-0">
                         <div className="flex items-center gap-1">
-                          <Heart className="w-4 h-4" />
+                          <Heart className="w-3 h-3 md:w-4 md:h-4 flex-shrink-0" />
                           <span>{post.likes}</span>
                         </div>
                         <div className="flex items-center gap-1">
-                          <MessageCircle className="w-4 h-4" />
+                          <MessageCircle className="w-3 h-3 md:w-4 md:h-4 flex-shrink-0" />
                           <span>{post.comments}</span>
                         </div>
                         <div className="flex items-center gap-1">
-                          <Eye className="w-4 h-4" />
+                          <Eye className="w-3 h-3 md:w-4 md:h-4 flex-shrink-0" />
                           <span>{post.views}</span>
                         </div>
                       </div>
 
-                      <button className="group/btn flex items-center gap-2 text-orange-500 font-semibold hover:text-orange-600 transition-colors">
+                      <button className="group/btn flex items-center gap-2 text-orange-500 font-semibold hover:text-orange-600 transition-colors text-sm whitespace-nowrap">
                         Read More
                         <ArrowRight className="w-4 h-4 group-hover/btn:translate-x-1 transition-transform" />
                       </button>
@@ -366,24 +352,22 @@ const Blog = () => {
       </div>
 
       {/* Category Filter & All Posts */}
-      <div className="py-16" data-aos="fade">
-        <div className="container mx-auto px-4">
+      <div className="py-12 md:py-16">
+        <div className="container mx-auto px-4 max-w-7xl">
           {/* Category Navigation */}
-          <div className="flex flex-wrap justify-center gap-4 mb-12" data-aos="fade-up" data-aos-delay="100">
-            {categories.map((category, index) => (
+          <div className="flex flex-wrap justify-center gap-2 md:gap-4 mb-8 md:mb-12">
+            {categories.map((category) => (
               <button
                 key={category}
                 onClick={() => setSelectedCategory(category)}
-                className={`px-6 py-3 rounded-full font-semibold text-sm transition-all duration-300 ${
+                className={`px-3 md:px-6 py-2 md:py-3 rounded-full font-semibold text-xs md:text-sm transition-all duration-300 ${
                   selectedCategory === category
                     ? 'bg-orange-500 text-white shadow-lg transform scale-105'
                     : 'bg-white text-gray-600 hover:bg-orange-100 hover:text-orange-600 shadow-md'
                 }`}
-                data-aos="fade-up"
-                data-aos-delay={`${200 + index * 50}`}
               >
-                {category}
-                <span className="ml-2 text-xs opacity-75">
+                <span className="whitespace-nowrap">{category}</span>
+                <span className="ml-1 md:ml-2 text-xs opacity-75">
                   ({category === 'All' ? blogPosts.length : blogPosts.filter(p => p.category === category).length})
                 </span>
               </button>
@@ -391,13 +375,11 @@ const Blog = () => {
           </div>
 
           {/* Posts Grid */}
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
             {filteredPosts.map((post, index) => (
               <article
                 key={post.id}
                 className="group bg-white rounded-3xl shadow-lg hover:shadow-2xl transition-all duration-500 overflow-hidden transform hover:-translate-y-2"
-                data-aos="fade-up"
-                data-aos-delay={`${300 + index * 100}`}
               >
                 <div className="relative h-48 overflow-hidden">
                   <img
@@ -407,31 +389,33 @@ const Blog = () => {
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent"></div>
                   
-                  <div className="absolute top-4 left-4" data-aos="fade-down" data-aos-delay={`${400 + index * 100}`}>
+                  <div className="absolute top-4 left-4">
                     <span className="bg-orange-500 text-white px-3 py-1 rounded-full text-xs font-bold">
                       {post.category}
                     </span>
                   </div>
                 </div>
 
-                <div className="p-6" data-aos="fade-up" data-aos-delay={`${500 + index * 100}`}>
+                <div className="p-4 md:p-6">
                   {/* Author & Date */}
-                  <div className="flex items-center gap-3 text-sm text-gray-500 mb-3">
-                    <img
-                      src={post.authorImage}
-                      alt={post.author}
-                      className="w-6 h-6 rounded-full"
-                    />
-                    <span>{post.author}</span>
-                    <span>•</span>
-                    <span>{formatDate(post.date)}</span>
+                  <div className="flex flex-wrap items-center gap-2 md:gap-3 text-xs md:text-sm text-gray-500 mb-3">
+                    <div className="flex items-center gap-2 min-w-0">
+                      <img
+                        src={post.authorImage}
+                        alt={post.author}
+                        className="w-5 h-5 md:w-6 md:h-6 rounded-full flex-shrink-0"
+                      />
+                      <span className="truncate">{post.author}</span>
+                    </div>
+                    <span className="hidden md:inline">•</span>
+                    <span className="truncate">{formatDate(post.date)}</span>
                   </div>
 
-                  <h3 className="font-bold text-xl text-gray-900 mb-3 group-hover:text-orange-600 transition-colors line-clamp-2">
+                  <h3 className="font-bold text-lg md:text-xl text-gray-900 mb-3 group-hover:text-orange-600 transition-colors line-clamp-2">
                     {post.title}
                   </h3>
 
-                  <p className="text-gray-600 mb-4 leading-relaxed line-clamp-3">
+                  <p className="text-gray-600 mb-4 leading-relaxed line-clamp-3 text-sm md:text-base">
                     {post.excerpt}
                   </p>
 
@@ -440,26 +424,26 @@ const Blog = () => {
                     {post.tags.slice(0, 2).map((tag) => (
                       <span
                         key={tag}
-                        className="px-2 py-1 bg-gray-100 text-gray-600 text-xs rounded-full hover:bg-orange-100 hover:text-orange-600 transition-colors cursor-pointer"
+                        className="px-2 py-1 bg-gray-100 text-gray-600 text-xs rounded-full hover:bg-orange-100 hover:text-orange-600 transition-colors cursor-pointer truncate"
                       >
                         #{tag}
                       </span>
                     ))}
                   </div>
 
-                  <div className="flex items-center justify-between">
-                    <div className="flex items-center gap-3 text-sm text-gray-500">
+                  <div className="flex items-center justify-between gap-4">
+                    <div className="flex items-center gap-2 md:gap-3 text-xs md:text-sm text-gray-500 min-w-0">
                       <span className="flex items-center gap-1">
-                        <Clock className="w-4 h-4" />
-                        {post.readTime}
+                        <Clock className="w-3 h-3 md:w-4 md:h-4 flex-shrink-0" />
+                        <span className="truncate">{post.readTime}</span>
                       </span>
                       <span className="flex items-center gap-1">
-                        <Heart className="w-4 h-4" />
-                        {post.likes}
+                        <Heart className="w-3 h-3 md:w-4 md:h-4 flex-shrink-0" />
+                        <span>{post.likes}</span>
                       </span>
                     </div>
 
-                    <button className="group/btn flex items-center gap-2 text-orange-500 font-semibold hover:text-orange-600 transition-colors">
+                    <button className="group/btn flex items-center gap-2 text-orange-500 font-semibold hover:text-orange-600 transition-colors text-sm whitespace-nowrap">
                       Read
                       <ChevronRight className="w-4 h-4 group-hover/btn:translate-x-1 transition-transform" />
                     </button>
@@ -471,16 +455,16 @@ const Blog = () => {
 
           {/* No Results */}
           {filteredPosts.length === 0 && (
-            <div className="text-center py-16" data-aos="fade-up" data-aos-delay="700">
-              <div className="text-6xl mb-4">📝</div>
-              <h3 className="text-2xl font-bold text-gray-900 mb-2">No articles found</h3>
-              <p className="text-gray-600 mb-6">Try adjusting your search or browse different categories</p>
+            <div className="text-center py-16">
+              <div className="text-4xl md:text-6xl mb-4">📝</div>
+              <h3 className="text-xl md:text-2xl font-bold text-gray-900 mb-2">No articles found</h3>
+              <p className="text-gray-600 mb-6 px-4">Try adjusting your search or browse different categories</p>
               <button
                 onClick={() => {
                   setSearchQuery('');
                   setSelectedCategory('All');
                 }}
-                className="bg-orange-500 text-white px-8 py-3 rounded-2xl font-bold hover:bg-orange-600 transition-colors"
+                className="bg-orange-500 text-white px-6 md:px-8 py-3 rounded-2xl font-bold hover:bg-orange-600 transition-colors"
               >
                 Show All Articles
               </button>
@@ -490,46 +474,46 @@ const Blog = () => {
       </div>
 
       {/* Newsletter Section */}
-      <div className="bg-gradient-to-r from-orange-600 to-orange-500 text-white py-16" data-aos="fade">
-        <div className="container mx-auto px-4">
+      <div className="bg-gradient-to-r from-orange-600 to-orange-500 text-white py-12 md:py-16 overflow-hidden">
+        <div className="container mx-auto px-4 max-w-7xl">
           <div className="max-w-4xl mx-auto text-center">
-            <div className="inline-block mb-6" data-aos="fade-down" data-aos-delay="100">
-              <span className="px-6 py-3 bg-white/20 backdrop-blur-sm rounded-full font-semibold">
+            <div className="inline-block mb-4 md:mb-6">
+              <span className="px-4 md:px-6 py-2 md:py-3 bg-white/20 backdrop-blur-sm rounded-full font-semibold text-sm md:text-base">
                 📬 Stay Informed
               </span>
             </div>
             
-            <h2 className="text-3xl md:text-4xl font-bold mb-4" data-aos="fade-up" data-aos-delay="200">
+            <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold mb-4">
               Never Miss a Story
             </h2>
-            <p className="text-xl text-white/90 mb-8" data-aos="fade-up" data-aos-delay="300">
+            <p className="text-lg md:text-xl text-white/90 mb-6 md:mb-8 px-4">
               Get our latest articles and insights delivered straight to your inbox
             </p>
             
-            <div className="max-w-md mx-auto flex gap-3" data-aos="fade-up" data-aos-delay="400">
+            <div className="max-w-md mx-auto flex flex-col sm:flex-row gap-3 px-4 mb-6 md:mb-8">
               <input
                 type="email"
                 placeholder="Enter your email"
                 className="flex-1 px-4 py-3 rounded-xl text-gray-800 focus:outline-none focus:ring-2 focus:ring-white/30 bg-gray-100"
               />
-              <button className="bg-gray-100 text-orange-600 px-6 py-3 rounded-xl font-bold hover:bg-gray-100 transition-colors flex items-center gap-2">
+              <button className="bg-gray-100 text-orange-600 px-6 py-3 rounded-xl font-bold hover:bg-gray-200 transition-colors flex items-center justify-center gap-2 whitespace-nowrap">
                 Subscribe
                 <ArrowRight className="w-5 h-5" />
               </button>
             </div>
 
-            <div className="flex items-center justify-center gap-8 mt-8 text-white/80" data-aos="fade-up" data-aos-delay="500">
+            <div className="flex flex-wrap items-center justify-center gap-4 md:gap-8 text-white/80">
               <div className="flex items-center gap-2">
-                <TrendingUp className="w-5 h-5" />
-                <span>Weekly insights</span>
+                <TrendingUp className="w-4 h-4 md:w-5 md:h-5 flex-shrink-0" />
+                <span className="text-sm md:text-base">Weekly insights</span>
               </div>
               <div className="flex items-center gap-2">
-                <Star className="w-5 h-5" />
-                <span>Exclusive content</span>
+                <Star className="w-4 h-4 md:w-5 md:h-5 flex-shrink-0" />
+                <span className="text-sm md:text-base">Exclusive content</span>
               </div>
               <div className="flex items-center gap-2">
-                <Filter className="w-5 h-5" />
-                <span>Curated picks</span>
+                <Filter className="w-4 h-4 md:w-5 md:h-5 flex-shrink-0" />
+                <span className="text-sm md:text-base">Curated picks</span>
               </div>
             </div>
           </div>

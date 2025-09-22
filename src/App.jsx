@@ -18,6 +18,9 @@ import About from "./components/About";
 import Store from "./components/Store";
 import Blog from "./components/Blog";
 import Footer from "./components/Footer";
+import Login from "./components/auth/Login";
+import Signup from "./components/auth/Signup";
+import Profile from "./components/Profile";
 
 const App = () => {
   React.useEffect(() => {
@@ -27,12 +30,13 @@ const App = () => {
       easing: "ease-in-sine",
       delay: 100,
     });
-  }, []); 
+  }, []);
 
   return (
     <Router>
       <Navbar />
       <Routes>
+        {/* Home Route */}
         <Route path="/" element={
           <>
             <Hero />
@@ -43,9 +47,18 @@ const App = () => {
             <Testimonials />
           </>
         } />
+        
+        {/* Authentication Routes */}
+        <Route path="/login" element={<Login />} />
+        <Route path="/signup" element={<Signup />} />
+        
+        {/* Main Pages */}
         <Route path="/about" element={<About />} />
         <Route path="/store" element={<Store />} />
         <Route path="/blog" element={<Blog />} />
+        
+        {/* Category Pages */}
+        <Route path="/profile" element={<Profile />} />
         <Route path="/top-rated" element={<TopRated />} />
         <Route path="/kids-wear" element={<KidsWear />} />
         <Route path="/mens-wear" element={<Menswear />} />
