@@ -1,4 +1,5 @@
 import { useNavigate } from 'react-router-dom';
+import { motion, AnimatePresence } from 'framer-motion';
 import Img1 from '../assets/women/women.png';
 import Img2 from '../assets/women/women2.jpg';
 import Img3 from '../assets/women/women3.jpg';
@@ -24,7 +25,6 @@ const ProductsData = [
     originalPrice: 119.99,
     color: 'white',
     category: 'Ethnic Wear',
-    aosDelay: '0',
     isNew: true,
     colors: ['#FFFFFF', '#F59E0B', '#3B82F6'],
     reviews: 156,
@@ -38,7 +38,6 @@ const ProductsData = [
     originalPrice: 159.99,
     color: 'red',
     category: 'Western Wear',
-    aosDelay: '200',
     isNew: false,
     colors: ['#EF4444', '#F59E0B', '#10B981'],
     reviews: 234,
@@ -53,7 +52,6 @@ const ProductsData = [
     originalPrice: 249.99,
     color: 'brown',
     category: 'Accessories',
-    aosDelay: '400',
     isNew: true,
     colors: ['#92400E', '#F59E0B', '#1F2937'],
     reviews: 89,
@@ -67,12 +65,83 @@ const ProductsData = [
     originalPrice: 59.99,
     color: 'yellow',
     category: 'Casual Wear',
-    aosDelay: '600',
     isNew: false,
     colors: ['#FBBF24', '#F59E0B', '#06B6D4'],
     reviews: 301,
   },
 ];
+
+// Animation variants
+const containerVariants = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: {
+      staggerChildren: 0.15,
+      delayChildren: 0.1,
+    }
+  }
+};
+
+const itemVariants = {
+  hidden: { 
+    opacity: 0, 
+    y: 50,
+    scale: 0.95 
+  },
+  visible: { 
+    opacity: 1, 
+    y: 0,
+    scale: 1,
+    transition: {
+      type: "spring",
+      stiffness: 100,
+      damping: 15,
+      duration: 0.6
+    }
+  }
+};
+
+const headerVariants = {
+  hidden: { opacity: 0, y: 30 },
+  visible: { 
+    opacity: 1, 
+    y: 0,
+    transition: {
+      type: "spring",
+      stiffness: 120,
+      damping: 20
+    }
+  }
+};
+
+const badgeVariants = {
+  hidden: { opacity: 0, scale: 0, rotate: -180 },
+  visible: { 
+    opacity: 1, 
+    scale: 1, 
+    rotate: 0,
+    transition: {
+      type: "spring",
+      stiffness: 150,
+      damping: 12,
+      delay: 0.2
+    }
+  }
+};
+
+const statsVariants = {
+  hidden: { opacity: 0, y: 30 },
+  visible: { 
+    opacity: 1, 
+    y: 0,
+    transition: {
+      type: "spring",
+      stiffness: 100,
+      damping: 20
+    }
+  }
+};
 
 const Products = () => {
   const [hoveredProduct, setHoveredProduct] = useState(null);
@@ -89,20 +158,26 @@ const Products = () => {
   const StarRating = ({ rating, size = 'sm' }) => (
     <div className="flex items-center gap-1">
       {[...Array(5)].map((_, index) => (
-        <FaStar
+        <motion.div
           key={index}
-          className={`${
-            size === 'sm' ? 'w-3 h-3' : 'w-4 h-4'
-          } ${
-            index < Math.floor(rating)
-              ? 'text-amber-400 fill-current'
-              : 'text-gray-300'
-          } ${
-            index === Math.floor(rating) && rating % 1 >= 0.5
-              ? 'text-amber-400 fill-current'
-              : ''
-          }`}
-        />
+          initial={{ opacity: 0, scale: 0 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ delay: index * 0.1, type: "spring", stiffness: 200 }}
+        >
+          <FaStar
+            className={`${
+              size === 'sm' ? 'w-3 h-3' : 'w-4 h-4'
+            } ${
+              index < Math.floor(rating)
+                ? 'text-amber-400 fill-current'
+                : 'text-gray-300'
+            } ${
+              index === Math.floor(rating) && rating % 1 >= 0.5
+                ? 'text-amber-400 fill-current'
+                : ''
+            }`}
+          />
+        </motion.div>
       ))}
       <span
         className={`text-xs ${size === 'sm' ? 'text-gray-500' : 'text-gray-600'}`}
@@ -120,145 +195,270 @@ const Products = () => {
     <section className="py-20 bg-gradient-to-br from-orange-50/50 via-white to-amber-50/20">
       <div className="container mx-auto px-4">
         {/* Header Section */}
-        <div className="text-center mb-16 max-w-4xl mx-auto">
-          <div
-            data-aos="fade-up"
+        <motion.div 
+          className="text-center mb-16 max-w-4xl mx-auto"
+          variants={containerVariants}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: "-100px" }}
+        >
+          <motion.div
+            variants={headerVariants}
             className="inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-orange-500/10 to-amber-500/10 text-orange-700 rounded-full border border-orange-200/50 mb-6 shadow-lg"
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
           >
-            <FaTag className="w-4 h-4" />
+            <motion.div
+              animate={{ rotate: 360 }}
+              transition={{ duration: 2, repeat: Infinity, ease: "linear" }}
+            >
+              <FaTag className="w-4 h-4" />
+            </motion.div>
             <span className="text-sm font-semibold">Top Selling Products</span>
-          </div>
+          </motion.div>
 
-          <h2
-            data-aos="fade-up"
-            data-aos-delay="100"
+          <motion.h2
+            variants={headerVariants}
             className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-gray-900 via-orange-600 to-amber-600 bg-clip-text text-transparent mb-4"
+            whileHover={{ scale: 1.02 }}
           >
             Featured Collection
-          </h2>
+          </motion.h2>
 
-          <p
-            data-aos="fade-up"
-            data-aos-delay="200"
+          <motion.p
+            variants={headerVariants}
             className="text-gray-600 text-lg leading-relaxed max-w-2xl mx-auto"
           >
             Discover our curated selection of premium fashion items designed to
             elevate your wardrobe with timeless style and modern elegance
-          </p>
-        </div>
+          </motion.p>
+        </motion.div>
 
         {/* Products Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 lg:gap-8">
-          {ProductsData.map((product) => (
-            <div
+        <motion.div 
+          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 lg:gap-8"
+          variants={containerVariants}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: "-50px" }}
+        >
+          {ProductsData.map((product, index) => (
+            <motion.div
               key={product.id}
-              data-aos="fade-up"
-              data-aos-delay={product.aosDelay}
-              className="group relative bg-white/80 backdrop-blur-sm rounded-2xl overflow-hidden shadow-lg hover:shadow-xl transition-all duration-500 transform hover:-translate-y-2 border border-gray-100/50 max-w-sm mx-auto"
+              variants={itemVariants}
+              className="group relative bg-white/80 backdrop-blur-sm rounded-2xl overflow-hidden shadow-lg border border-gray-100/50 max-w-sm mx-auto"
+              onHoverStart={() => setHoveredProduct(product.id)}
+              onHoverEnd={() => setHoveredProduct(null)}
+              whileHover={{ 
+                y: -8,
+                scale: 1.02,
+                boxShadow: "0 25px 50px -12px rgba(0, 0, 0, 0.25)"
+              }}
+              transition={{ type: "spring", stiffness: 150, damping: 20 }}
             >
               {/* Product Image Container */}
-              <div
-                className="relative h-64 overflow-hidden bg-gradient-to-br from-orange-50/70 to-white/50"
-                onMouseEnter={() => setHoveredProduct(product.id)}
-                onMouseLeave={() => setHoveredProduct(null)}
-              >
+              <div className="relative h-64 overflow-hidden bg-gradient-to-br from-orange-50/70 to-white/50">
                 {/* Badges */}
                 <div className="absolute top-3 left-3 z-10 flex flex-col gap-2">
-                  {product.isNew && (
-                    <span className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-gradient-to-r from-green-500 to-emerald-500 text-white text-xs font-semibold rounded-full shadow-lg">
-                      <FaCircle className="w-2 h-2" />
-                      New Arrival
-                    </span>
-                  )}
-                  {product.isTrending && (
-                    <span className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-gradient-to-r from-orange-500 to-amber-500 text-white text-xs font-semibold rounded-full shadow-lg">
-                      <FaStar className="w-3 h-3" />
-                      Trending
-                    </span>
-                  )}
+                  <AnimatePresence>
+                    {product.isNew && (
+                      <motion.span
+                        variants={badgeVariants}
+                        initial="hidden"
+                        animate="visible"
+                        exit="hidden"
+                        className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-gradient-to-r from-green-500 to-emerald-500 text-white text-xs font-semibold rounded-full shadow-lg"
+                        whileHover={{ scale: 1.1 }}
+                      >
+                        <motion.div
+                          animate={{ opacity: [1, 0.5, 1] }}
+                          transition={{ duration: 1.5, repeat: Infinity }}
+                        >
+                          <FaCircle className="w-2 h-2" />
+                        </motion.div>
+                        New Arrival
+                      </motion.span>
+                    )}
+                    {product.isTrending && (
+                      <motion.span
+                        variants={badgeVariants}
+                        initial="hidden"
+                        animate="visible"
+                        exit="hidden"
+                        className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-gradient-to-r from-orange-500 to-amber-500 text-white text-xs font-semibold rounded-full shadow-lg"
+                        whileHover={{ scale: 1.1 }}
+                      >
+                        <motion.div
+                          animate={{ rotate: 360 }}
+                          transition={{ duration: 2, repeat: Infinity, ease: "linear" }}
+                        >
+                          <FaStar className="w-3 h-3" />
+                        </motion.div>
+                        Trending
+                      </motion.span>
+                    )}
+                  </AnimatePresence>
                 </div>
 
                 {/* Quick Actions */}
-                <div
-                  className={`absolute top-3 right-3 z-10 flex flex-col gap-2 transition-opacity duration-300 ${
-                    hoveredProduct === product.id ? 'opacity-100' : 'opacity-0'
-                  }`}
+                <motion.div
+                  className="absolute top-3 right-3 z-10 flex flex-col gap-2"
+                  initial={{ opacity: 0, x: 20 }}
+                  animate={{ 
+                    opacity: hoveredProduct === product.id ? 1 : 0,
+                    x: hoveredProduct === product.id ? 0 : 20
+                  }}
+                  transition={{ duration: 0.3 }}
                 >
-                  <button
+                  <motion.button
                     onClick={() => toggleWishlist(product.id)}
-                    className="p-2 bg-white/90 rounded-full shadow-lg hover:bg-orange-500 hover:text-white transition-all duration-200 transform hover:scale-110"
+                    className="p-2 bg-white/90 rounded-full shadow-lg transition-all duration-200"
+                    whileHover={{ 
+                      scale: 1.15,
+                      backgroundColor: "#f97316",
+                      color: "white"
+                    }}
+                    whileTap={{ scale: 0.95 }}
                   >
-                    {wishlist[product.id] ? (
-                      <FaHeart className="w-4 h-4 text-red-500" />
-                    ) : (
-                      <FaRegHeart className="w-4 h-4 text-gray-600" />
-                    )}
-                  </button>
-                  <button className="p-2 bg-white/90 rounded-full shadow-lg hover:bg-blue-500 hover:text-white transition-all duration-200 transform hover:scale-110">
+                    <AnimatePresence mode="wait">
+                      {wishlist[product.id] ? (
+                        <motion.div
+                          key="filled"
+                          initial={{ scale: 0 }}
+                          animate={{ scale: 1 }}
+                          exit={{ scale: 0 }}
+                        >
+                          <FaHeart className="w-4 h-4 text-red-500" />
+                        </motion.div>
+                      ) : (
+                        <motion.div
+                          key="outline"
+                          initial={{ scale: 0 }}
+                          animate={{ scale: 1 }}
+                          exit={{ scale: 0 }}
+                        >
+                          <FaRegHeart className="w-4 h-4 text-gray-600" />
+                        </motion.div>
+                      )}
+                    </AnimatePresence>
+                  </motion.button>
+                  
+                  <motion.button 
+                    className="p-2 bg-white/90 rounded-full shadow-lg transition-all duration-200"
+                    whileHover={{ 
+                      scale: 1.15,
+                      backgroundColor: "#3b82f6",
+                      color: "white"
+                    }}
+                    whileTap={{ scale: 0.95 }}
+                  >
                     <FaEye className="w-4 h-4 text-gray-600" />
-                  </button>
-                </div>
+                  </motion.button>
+                </motion.div>
 
                 {/* Image */}
-                <img
+                <motion.img
                   src={product.img}
                   alt={product.title}
-                  className="w-full h-full object-contain transition-transform duration-500 group-hover:scale-110"
+                  className="w-full h-full object-contain transition-transform duration-500"
+                  whileHover={{ scale: 1.1 }}
+                  transition={{ duration: 0.5, ease: "easeOut" }}
                 />
 
                 {/* Color Options */}
-                <div
-                  className={`absolute bottom-3 left-3 right-3 flex justify-center gap-2 transition-opacity duration-300 ${
-                    hoveredProduct === product.id ? 'opacity-100' : 'opacity-0'
-                  }`}
+                <motion.div
+                  className="absolute bottom-3 left-3 right-3 flex justify-center gap-2"
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ 
+                    opacity: hoveredProduct === product.id ? 1 : 0,
+                    y: hoveredProduct === product.id ? 0 : 20
+                  }}
+                  transition={{ duration: 0.3, delay: 0.1 }}
                 >
-                  {product.colors.map((color, index) => (
-                    <button
-                      key={index}
-                      className="w-5 h-5 rounded-full border-2 border-white/50 shadow-sm hover:scale-110 transition-transform duration-200"
+                  {product.colors.map((color, colorIndex) => (
+                    <motion.button
+                      key={colorIndex}
+                      className="w-5 h-5 rounded-full border-2 border-white/50 shadow-sm"
                       style={{ backgroundColor: color }}
+                      whileHover={{ scale: 1.2, y: -3 }}
+                      whileTap={{ scale: 0.95 }}
+                      initial={{ scale: 0, opacity: 0 }}
+                      animate={{ 
+                        scale: hoveredProduct === product.id ? 1 : 0,
+                        opacity: hoveredProduct === product.id ? 1 : 0
+                      }}
+                      transition={{ delay: colorIndex * 0.1 }}
                     />
                   ))}
-                </div>
+                </motion.div>
               </div>
 
               {/* Product Details */}
               <div className="p-5">
                 {/* Category */}
-                <p className="text-xs text-orange-600 uppercase tracking-wider font-medium mb-2">
+                <motion.p 
+                  className="text-xs text-orange-600 uppercase tracking-wider font-medium mb-2"
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  transition={{ delay: 0.2 }}
+                >
                   {product.category}
-                </p>
+                </motion.p>
 
                 {/* Title */}
-                <h3 className="text-lg font-bold text-gray-900 mb-2 line-clamp-2 group-hover:text-orange-600 transition-colors duration-200">
+                <motion.h3 
+                  className="text-lg font-bold text-gray-900 mb-2 line-clamp-2 transition-colors duration-200"
+                  whileHover={{ color: "#f97316" }}
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.3 }}
+                >
                   {product.title}
-                </h3>
+                </motion.h3>
 
                 {/* Price */}
-                <div className="flex items-center gap-3 mb-3">
+                <motion.div 
+                  className="flex items-center gap-3 mb-3"
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.4 }}
+                >
                   <span className="text-xl font-bold text-gray-900">
                     Rs{product.price}
                   </span>
                   <span className="text-sm text-gray-400 line-through">
                     Rs{product.originalPrice}
                   </span>
-                  <span className="inline-flex items-center gap-1 px-2 py-1 bg-orange-100 text-orange-600 text-xs font-medium rounded-full">
+                  <motion.span 
+                    className="inline-flex items-center gap-1 px-2 py-1 bg-orange-100 text-orange-600 text-xs font-medium rounded-full"
+                    whileHover={{ scale: 1.05 }}
+                  >
                     -25%
-                  </span>
-                </div>
+                  </motion.span>
+                </motion.div>
 
                 {/* Rating & Reviews */}
-                <div className="flex items-center justify-between mb-4">
+                <motion.div 
+                  className="flex items-center justify-between mb-4"
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.5 }}
+                >
                   <StarRating rating={product.rating} size="sm" />
                   <span className="text-xs text-gray-500 flex items-center gap-1">
                     {product.reviews} reviews
                   </span>
-                </div>
+                </motion.div>
 
                 {/* Color Indicator */}
-                <div className="flex items-center gap-2 mb-4">
+                <motion.div 
+                  className="flex items-center gap-2 mb-4"
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.6 }}
+                >
                   <span className="text-xs text-gray-500">Color:</span>
-                  <div
+                  <motion.div
                     className="w-4 h-4 rounded-full border-2 border-gray-200"
                     style={{
                       backgroundColor:
@@ -270,34 +470,61 @@ const Products = () => {
                           ? '#92400E'
                           : '#FBBF24',
                     }}
-                  ></div>
+                    whileHover={{ scale: 1.2 }}
+                  />
                   <span className="text-xs text-gray-600 capitalize">
                     {product.color}
                   </span>
-                </div>
+                </motion.div>
 
                 {/* Action Button */}
-                <button className="w-full bg-gradient-to-r from-orange-500 to-amber-600 hover:from-orange-600 hover:to-amber-700 text-white py-3 px-6 rounded-xl font-semibold transition-all duration-200 transform hover:scale-[1.02] active:scale-[0.98] shadow-lg hover:shadow-xl flex items-center justify-center gap-2">
+                <motion.button 
+                  className="w-full bg-gradient-to-r from-orange-500 to-amber-600 text-white py-3 px-6 rounded-xl font-semibold shadow-lg flex items-center justify-center gap-2"
+                  whileHover={{ 
+                    scale: 1.02,
+                    boxShadow: "0 20px 40px -10px rgba(249, 115, 22, 0.3)"
+                  }}
+                  whileTap={{ scale: 0.98 }}
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.7 }}
+                >
                   <FaShoppingCart className="w-4 h-4" />
                   Add to Cart
-                </button>
+                </motion.button>
               </div>
-            </div>
+            </motion.div>
           ))}
-        </div>
+        </motion.div>
 
         {/* View All Button */}
-        <div className="text-center mt-16">
-          <button
+        <motion.div 
+          className="text-center mt-16"
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ delay: 0.8 }}
+        >
+          <motion.button
             onClick={handleViewAll}
-            className="group inline-flex items-center gap-3 px-8 py-4 bg-white border-2 border-gray-200 rounded-full text-gray-700 font-semibold hover:bg-gradient-to-r hover:from-orange-500 hover:to-amber-600 hover:text-white hover:border-transparent transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl"
+            className="group inline-flex items-center gap-3 px-8 py-4 bg-white border-2 border-gray-200 rounded-full text-gray-700 font-semibold shadow-lg"
+            whileHover={{ 
+              scale: 1.05,
+              background: "linear-gradient(to right, #f97316, #d97706)",
+              color: "white",
+              borderColor: "transparent",
+              boxShadow: "0 20px 40px -10px rgba(0, 0, 0, 0.1)"
+            }}
+            whileTap={{ scale: 0.95 }}
           >
             <span>View All Products</span>
-            <svg
-              className="w-5 h-5 group-hover:translate-x-1 transition-transform duration-300"
+            <motion.svg
+              className="w-5 h-5"
               fill="none"
               stroke="currentColor"
               viewBox="0 0 24 24"
+              whileHover={{ x: 5 }}
+              transition={{ type: "spring", stiffness: 400 }}
             >
               <path
                 strokeLinecap="round"
@@ -305,29 +532,52 @@ const Products = () => {
                 strokeWidth={2}
                 d="M17 8l4 4m0 0l-4 4m4-4H3"
               />
-            </svg>
-          </button>
-        </div>
+            </motion.svg>
+          </motion.button>
+        </motion.div>
 
         {/* Stats Section */}
-        <div className="mt-20 grid grid-cols-1 md:grid-cols-4 gap-6">
-          <div className="text-center p-6 bg-gradient-to-br from-orange-500/10 to-amber-500/10 rounded-2xl border border-orange-200/30">
-            <div className="text-3xl font-bold text-orange-600 mb-2">1K+</div>
-            <div className="text-sm text-gray-600">Happy Customers</div>
-          </div>
-          <div className="text-center p-6 bg-gradient-to-br from-green-500/10 to-emerald-500/10 rounded-2xl border border-green-200/30">
-            <div className="text-3xl font-bold text-green-600 mb-2">500+</div>
-            <div className="text-sm text-gray-600">Premium Products</div>
-          </div>
-          <div className="text-center p-6 bg-gradient-to-br from-orange-500/10 to-amber-500/10 rounded-2xl border border-orange-200/30">
-            <div className="text-3xl font-bold text-orange-600 mb-2">98%</div>
-            <div className="text-sm text-gray-600">Satisfaction Rate</div>
-          </div>
-          <div className="text-center p-6 bg-gradient-to-br from-orange-500/10 to-amber-500/10 rounded-2xl border border-orange-200/30">
-            <div className="text-3xl font-bold text-orange-600 mb-2">24/7</div>
-            <div className="text-sm text-gray-600">Customer Support</div>
-          </div>
-        </div>
+        <motion.div 
+          className="mt-20 grid grid-cols-1 md:grid-cols-4 gap-6"
+          variants={containerVariants}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true }}
+        >
+          {[
+            { number: "1K+", text: "Happy Customers", color: "orange" },
+            { number: "500+", text: "Premium Products", color: "green" },
+            { number: "98%", text: "Satisfaction Rate", color: "orange" },
+            { number: "24/7", text: "Customer Support", color: "orange" }
+          ].map((stat, index) => (
+            <motion.div 
+              key={index}
+              variants={statsVariants}
+              className={`text-center p-6 bg-gradient-to-br ${
+                stat.color === 'green' 
+                  ? 'from-green-500/10 to-emerald-500/10 border-green-200/30' 
+                  : 'from-orange-500/10 to-amber-500/10 border-orange-200/30'
+              } rounded-2xl border`}
+              whileHover={{ 
+                scale: 1.05,
+                y: -5
+              }}
+              transition={{ type: "spring", stiffness: 300 }}
+            >
+              <motion.div 
+                className={`text-3xl font-bold mb-2 ${
+                  stat.color === 'green' ? 'text-green-600' : 'text-orange-600'
+                }`}
+                initial={{ opacity: 0, scale: 0.5 }}
+                whileInView={{ opacity: 1, scale: 1 }}
+                transition={{ delay: index * 0.1, type: "spring", stiffness: 200 }}
+              >
+                {stat.number}
+              </motion.div>
+              <div className="text-sm text-gray-600">{stat.text}</div>
+            </motion.div>
+          ))}
+        </motion.div>
       </div>
     </section>
   );

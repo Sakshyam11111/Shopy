@@ -1,6 +1,6 @@
-// Modified Login.jsx
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { motion, AnimatePresence } from 'framer-motion';
 import { 
   Mail, 
   Lock, 
@@ -92,65 +92,136 @@ const Login = () => {
     navigate('/');
   };
 
+  // Animation variants
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.2,
+        delayChildren: 0.3,
+      },
+    },
+  };
+
+  const itemVariants = {
+    hidden: { opacity: 0, y: 20 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: { duration: 0.5, ease: 'easeOut' },
+    },
+  };
+
+  const inputVariants = {
+    initial: { scale: 1 },
+    focus: { scale: 1.02, transition: { duration: 0.3 } },
+    error: { x: [-5, 5, -5, 0], transition: { duration: 0.3 } },
+  };
+
   return (
-    <div className="min-h-screen bg-gradient-to-br from-orange-50 via-pink-50 to-purple-50 py-12 px-4">
+    <motion.div
+      className="min-h-screen bg-gradient-to-br from-orange-50 via-pink-50 to-purple-50 py-12 px-4"
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ duration: 0.8 }}
+    >
       <div className="max-w-6xl mx-auto">
-        <div className="grid lg:grid-cols-2 gap-12 items-center">
+        <motion.div
+          className="grid lg:grid-cols-2 gap-12 items-center"
+          variants={containerVariants}
+          initial="hidden"
+          animate="visible"
+        >
           {/* Left Side - Branding */}
-          <div className="text-center lg:text-left space-y-8">
+          <motion.div variants={itemVariants} className="text-center lg:text-left space-y-8">
             <div className="space-y-4">
-              <div className="flex items-center gap-3 justify-center lg:justify-start">
-                <div className="w-16 h-16 bg-gradient-to-r from-orange-500 to-pink-500 rounded-3xl flex items-center justify-center text-white font-black text-2xl shadow-xl">
+              <motion.div
+                className="flex items-center gap-3 justify-center lg:justify-start"
+                whileHover={{ scale: 1.05 }}
+                transition={{ duration: 0.3 }}
+              >
+                <motion.div
+                  className="w-16 h-16 bg-gradient-to-r from-orange-500 to-pink-500 rounded-3xl flex items-center justify-center text-white font-black text-2xl shadow-xl"
+                  whileHover={{ rotate: 10, scale: 1.1 }}
+                  transition={{ duration: 0.3 }}
+                >
                   S
-                </div>
+                </motion.div>
                 <div>
                   <h1 className="text-4xl font-black bg-gradient-to-r from-gray-900 to-gray-700 bg-clip-text text-transparent">
                     Shopy
                   </h1>
                   <p className="text-gray-600 font-medium">Your Shopping Paradise</p>
                 </div>
-              </div>
+              </motion.div>
               
-              <h2 className="text-5xl lg:text-6xl font-black text-gray-800 leading-tight">
+              <motion.h2
+                variants={itemVariants}
+                className="text-5xl lg:text-6xl font-black text-gray-800 leading-tight"
+              >
                 Welcome
                 <br />
                 <span className="bg-gradient-to-r from-orange-500 to-pink-500 bg-clip-text text-transparent">
                   Back!
                 </span>
-              </h2>
+              </motion.h2>
               
-              <p className="text-xl text-gray-600 max-w-md mx-auto lg:mx-0">
+              <motion.p
+                variants={itemVariants}
+                className="text-xl text-gray-600 max-w-md mx-auto lg:mx-0"
+              >
                 Sign in to access your account and continue your shopping journey with exclusive deals and personalized recommendations.
-              </p>
+              </motion.p>
             </div>
 
             {/* Features */}
-            <div className="grid grid-cols-2 gap-6 max-w-md mx-auto lg:mx-0">
-              <div className="text-center lg:text-left">
-                <div className="w-12 h-12 bg-orange-100 rounded-2xl flex items-center justify-center mx-auto lg:mx-0 mb-3">
-                  <Shield className="w-6 h-6 text-orange-500" />
-                </div>
-                <h3 className="font-bold text-gray-800 mb-1">Secure Login</h3>
-                <p className="text-sm text-gray-600">Protected with advanced security</p>
-              </div>
-              
-              <div className="text-center lg:text-left">
-                <div className="w-12 h-12 bg-pink-100 rounded-2xl flex items-center justify-center mx-auto lg:mx-0 mb-3">
-                  <Zap className="w-6 h-6 text-pink-500" />
-                </div>
-                <h3 className="font-bold text-gray-800 mb-1">Quick Access</h3>
-                <p className="text-sm text-gray-600">Fast and seamless experience</p>
-              </div>
-            </div>
-          </div>
+            <motion.div
+              className="grid grid-cols-2 gap-6 max-w-md mx-auto lg:mx-0"
+              variants={containerVariants}
+            >
+              {[
+                { icon: Shield, title: 'Secure Login', desc: 'Protected with advanced security', color: 'text-orange-500' },
+                { icon: Zap, title: 'Quick Access', desc: 'Fast and seamless experience', color: 'text-pink-500' },
+              ].map((feature, index) => (
+                <motion.div
+                  key={index}
+                  variants={itemVariants}
+                  className="text-center lg:text-left"
+                  whileHover={{ scale: 1.05 }}
+                  transition={{ duration: 0.3 }}
+                >
+                  <motion.div
+                    className={`w-12 h-12 ${index === 0 ? 'bg-orange-100' : 'bg-pink-100'} rounded-2xl flex items-center justify-center mx-auto lg:mx-0 mb-3`}
+                    whileHover={{ scale: 1.1 }}
+                    transition={{ duration: 0.3 }}
+                  >
+                    <feature.icon className={`w-6 h-6 ${feature.color}`} />
+                  </motion.div>
+                  <h3 className="font-bold text-gray-800 mb-1">{feature.title}</h3>
+                  <p className="text-sm text-gray-600">{feature.desc}</p>
+                </motion.div>
+              ))}
+            </motion.div>
+          </motion.div>
 
           {/* Right Side - Login Form */}
-          <div className="bg-white rounded-3xl shadow-2xl p-8 lg:p-10">
+          <motion.div
+            variants={itemVariants}
+            className="bg-white rounded-3xl shadow-2xl p-8 lg:p-10"
+            whileHover={{ y: -5, boxShadow: '0 20px 40px rgba(0, 0, 0, 0.15)' }}
+            transition={{ duration: 0.3 }}
+          >
             <form onSubmit={handleSubmit} className="space-y-6">
               {/* Email Input */}
               <div className="space-y-2">
                 <label className="block text-sm font-semibold text-gray-700">Email Address</label>
-                <div className="relative">
+                <motion.div
+                  className="relative"
+                  variants={inputVariants}
+                  initial="initial"
+                  animate={errors.email ? 'error' : formData.email ? 'focus' : 'initial'}
+                >
                   <input
                     type="email"
                     name="email"
@@ -163,22 +234,39 @@ const Login = () => {
                         : 'border-gray-200 focus:border-orange-400 focus:ring-4 focus:ring-orange-100'
                     }`}
                   />
-                  <Mail className={`w-5 h-5 absolute left-4 top-1/2 transform -translate-y-1/2 transition-colors duration-300 ${
-                    errors.email ? 'text-red-400' : 'text-gray-400'
-                  }`} />
-                </div>
-                {errors.email && (
-                  <div className="flex items-center gap-2 text-red-500 text-sm">
-                    <AlertCircle className="w-4 h-4" />
-                    {errors.email}
-                  </div>
-                )}
+                  <motion.div
+                    className="absolute left-4 top-1/2 transform -translate-y-1/2"
+                    animate={{ scale: formData.email ? 1.1 : 1 }}
+                    transition={{ duration: 0.3 }}
+                  >
+                    <Mail className={`w-5 h-5 ${errors.email ? 'text-red-400' : 'text-gray-400'}`} />
+                  </motion.div>
+                </motion.div>
+                <AnimatePresence>
+                  {errors.email && (
+                    <motion.div
+                      initial={{ opacity: 0, y: -10 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      exit={{ opacity: 0, y: -10 }}
+                      transition={{ duration: 0.3 }}
+                      className="flex items-center gap-2 text-red-500 text-sm"
+                    >
+                      <AlertCircle className="w-4 h-4" />
+                      {errors.email}
+                    </motion.div>
+                  )}
+                </AnimatePresence>
               </div>
 
               {/* Password Input */}
               <div className="space-y-2">
                 <label className="block text-sm font-semibold text-gray-700">Password</label>
-                <div className="relative">
+                <motion.div
+                  className="relative"
+                  variants={inputVariants}
+                  initial="initial"
+                  animate={errors.password ? 'error' : formData.password ? 'focus' : 'initial'}
+                >
                   <input
                     type={showPassword ? 'text' : 'password'}
                     name="password"
@@ -191,88 +279,153 @@ const Login = () => {
                         : 'border-gray-200 focus:border-orange-400 focus:ring-4 focus:ring-orange-100'
                     }`}
                   />
-                  <Lock className={`w-5 h-5 absolute left-4 top-1/2 transform -translate-y-1/2 transition-colors duration-300 ${
-                    errors.password ? 'text-red-400' : 'text-gray-400'
-                  }`} />
-                  <button
+                  <motion.div
+                    className="absolute left-4 top-1/2 transform -translate-y-1/2"
+                    animate={{ scale: formData.password ? 1.1 : 1 }}
+                    transition={{ duration: 0.3 }}
+                  >
+                    <Lock className={`w-5 h-5 ${errors.password ? 'text-red-400' : 'text-gray-400'}`} />
+                  </motion.div>
+                  <motion.button
                     type="button"
                     onClick={() => setShowPassword(!showPassword)}
-                    className="absolute right-4 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-600 transition-colors duration-300"
+                    whileHover={{ scale: 1.1 }}
+                    whileTap={{ scale: 0.9 }}
+                    className="absolute right-4 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-600"
                   >
                     {showPassword ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
-                  </button>
-                </div>
-                {errors.password && (
-                  <div className="flex items-center gap-2 text-red-500 text-sm">
-                    <AlertCircle className="w-4 h-4" />
-                    {errors.password}
-                  </div>
-                )}
+                  </motion.button>
+                </motion.div>
+                <AnimatePresence>
+                  {errors.password && (
+                    <motion.div
+                      initial={{ opacity: 0, y: -10 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      exit={{ opacity: 0, y: -10 }}
+                      transition={{ duration: 0.3 }}
+                      className="flex items-center gap-2 text-red-500 text-sm"
+                    >
+                      <AlertCircle className="w-4 h-4" />
+                      {errors.password}
+                    </motion.div>
+                  )}
+                </AnimatePresence>
               </div>
 
               {/* Remember Me & Forgot Password */}
-              <div className="flex items-center justify-between">
+              <motion.div
+                className="flex items-center justify-between"
+                variants={itemVariants}
+              >
                 <label className="flex items-center gap-3 cursor-pointer group">
-                  <input type="checkbox" className="w-4 h-4 text-orange-500 border-gray-300 rounded focus:ring-orange-400" />
-                  <span className="text-sm text-gray-600 group-hover:text-gray-800 transition-colors duration-300">Remember me</span>
+                  <motion.input
+                    type="checkbox"
+                    className="w-4 h-4 text-orange-500 border-gray-300 rounded focus:ring-orange-400"
+                    whileHover={{ scale: 1.1 }}
+                    transition={{ duration: 0.3 }}
+                  />
+                  <motion.span
+                    className="text-sm text-gray-600 group-hover:text-gray-800"
+                    whileHover={{ x: 3 }}
+                    transition={{ duration: 0.3 }}
+                  >
+                    Remember me
+                  </motion.span>
                 </label>
-                <button 
+                <motion.button
                   type="button"
-                  onClick={() => handleNavigation('/forgot-password')} 
-                  className="text-sm text-orange-500 hover:text-orange-600 font-medium transition-colors duration-300"
+                  onClick={() => handleNavigation('/forgot-password')}
+                  whileHover={{ scale: 1.05, x: 3 }}
+                  whileTap={{ scale: 0.95 }}
+                  className="text-sm text-orange-500 hover:text-orange-600 font-medium"
                 >
                   Forgot password?
-                </button>
-              </div>
+                </motion.button>
+              </motion.div>
 
-              {errors.form && (
-                <div className="flex items-center gap-2 text-red-500 text-sm">
-                  <AlertCircle className="w-4 h-4" />
-                  {errors.form}
-                </div>
-              )}
+              <AnimatePresence>
+                {errors.form && (
+                  <motion.div
+                    initial={{ opacity: 0, y: -10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: -10 }}
+                    transition={{ duration: 0.3 }}
+                    className="flex items-center gap-2 text-red-500 text-sm"
+                  >
+                    <AlertCircle className="w-4 h-4" />
+                    {errors.form}
+                  </motion.div>
+                )}
+              </AnimatePresence>
 
               {/* Submit Button */}
-              <button
+              <motion.button
                 type="submit"
                 disabled={isLoading}
-                className={`w-full py-4 px-6 rounded-2xl font-bold text-white transition-all duration-300 transform hover:scale-105 flex items-center justify-center gap-3 shadow-lg ${
+                whileHover={{ scale: isLoading ? 1 : 1.05 }}
+                whileTap={{ scale: isLoading ? 1 : 0.95 }}
+                className={`w-full py-4 px-6 rounded-2xl font-bold text-white flex items-center justify-center gap-3 shadow-lg ${
                   isLoading 
                     ? 'bg-gray-400 cursor-not-allowed' 
                     : 'bg-gradient-to-r from-orange-500 to-pink-500 hover:from-orange-600 hover:to-pink-600'
                 }`}
               >
-                {isLoading ? (
-                  <>
-                    <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
-                    Signing In...
-                  </>
-                ) : (
-                  <>
-                    Sign In
-                    <ArrowRight className="w-5 h-5" />
-                  </>
-                )}
-              </button>
+                <AnimatePresence mode="wait">
+                  {isLoading ? (
+                    <motion.div
+                      key="loading"
+                      initial={{ opacity: 0, x: 10 }}
+                      animate={{ opacity: 1, x: 0 }}
+                      exit={{ opacity: 0, x: -10 }}
+                      transition={{ duration: 0.3 }}
+                      className="flex items-center gap-3"
+                    >
+                      <motion.div
+                        className="w-5 h-5 border-2 border-white border-t-transparent rounded-full"
+                        animate={{ rotate: 360 }}
+                        transition={{ repeat: Infinity, duration: 1, ease: 'linear' }}
+                      />
+                      Signing In...
+                    </motion.div>
+                  ) : (
+                    <motion.div
+                      key="signin"
+                      initial={{ opacity: 0, x: 10 }}
+                      animate={{ opacity: 1, x: 0 }}
+                      exit={{ opacity: 0, x: -10 }}
+                      transition={{ duration: 0.3 }}
+                      className="flex items-center gap-3"
+                    >
+                      Sign In
+                      <ArrowRight className="w-5 h-5" />
+                    </motion.div>
+                  )}
+                </AnimatePresence>
+              </motion.button>
             </form>
 
             {/* Sign Up Link */}
-            <div className="text-center mt-8">
+            <motion.div
+              variants={itemVariants}
+              className="text-center mt-8"
+            >
               <p className="text-gray-600">
                 Don't have an account?{' '}
-                <button 
-                  type="button" 
+                <motion.button
+                  type="button"
                   onClick={() => handleNavigation('/signup')}
-                  className="text-orange-500 hover:text-orange-600 font-bold transition-colors duration-300"
+                  whileHover={{ scale: 1.05, x: 3 }}
+                  whileTap={{ scale: 0.95 }}
+                  className="text-orange-500 hover:text-orange-600 font-bold"
                 >
                   Sign Up
-                </button>
+                </motion.button>
               </p>
-            </div>
-          </div>
-        </div>
+            </motion.div>
+          </motion.div>
+        </motion.div>
       </div>
-    </div>
+    </motion.div>
   );
 };
 

@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { Heart, Eye, ShoppingBag, Star, Filter, ArrowRight, Shield, Zap } from "lucide-react";
+import { motion, AnimatePresence } from "framer-motion";
 
 const Menswear = () => {
     const [isVisible, setIsVisible] = useState(false);
@@ -45,8 +46,7 @@ const Menswear = () => {
 
     useEffect(() => {
         // Trigger initial animation
-        const timer = setTimeout(() => setIsVisible(true), 100);
-        return () => clearTimeout(timer);
+        setIsVisible(true);
     }, []);
 
     useEffect(() => {
@@ -61,7 +61,7 @@ const Menswear = () => {
     const handleFilterClick = (category) => {
         setActiveFilter(category);
         setIsVisible(false);
-        setTimeout(() => setIsVisible(true), 150);
+        setTimeout(() => setIsVisible(true), 50);
     };
 
     const getCategoryStats = (category) => {
@@ -72,7 +72,7 @@ const Menswear = () => {
     const renderStarRating = (rating) => {
         const fullStars = Math.floor(rating);
         const hasHalfStar = rating % 1 !== 0;
-        
+
         return (
             <div className="flex items-center">
                 {[...Array(fullStars)].map((_, i) => (
@@ -84,57 +84,124 @@ const Menswear = () => {
         );
     };
 
+    // Framer Motion variants for animations
+    const containerVariants = {
+        hidden: { opacity: 0 },
+        visible: {
+            opacity: 1,
+            transition: {
+                staggerChildren: 0.1,
+            },
+        },
+    };
+
+    const itemVariants = {
+        hidden: { opacity: 0, y: 30 },
+        visible: {
+            opacity: 1,
+            y: 0,
+            transition: {
+                type: "spring",
+                stiffness: 100,
+                damping: 20,
+            },
+        },
+    };
+
+    const buttonVariants = {
+        hover: { scale: 1.05, transition: { type: "spring", stiffness: 300 } },
+        tap: { scale: 0.95 },
+    };
+
+    const badgeVariants = {
+        hidden: { opacity: 0, y: 10 },
+        visible: { opacity: 1, y: 0, transition: { duration: 0.3 } },
+    };
+
     return (
         <div className="min-h-screen bg-gradient-to-br from-gray-100 via-slate-50 to-blue-50 py-12 lg:py-20 relative overflow-hidden">
             {/* Animated Background Elements */}
-            <div className="absolute inset-0 overflow-hidden pointer-events-none">
-                <div className="absolute -top-40 -right-40 w-80 h-80 bg-blue-200 rounded-full mix-blend-multiply filter blur-xl opacity-50 animate-pulse"></div>
-                <div className="absolute -bottom-40 -left-40 w-80 h-80 bg-gray-300 rounded-full mix-blend-multiply filter blur-xl opacity-50 animate-pulse animation-delay-2000"></div>
-                <div className="absolute top-40 left-40 w-80 h-80 bg-indigo-200 rounded-full mix-blend-multiply filter blur-xl opacity-50 animate-pulse animation-delay-4000"></div>
-            </div>
+            <motion.div
+                className="absolute inset-0 overflow-hidden pointer-events-none"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ duration: 1 }}
+            >
+                <motion.div
+                    className="absolute -top-40 -right-40 w-80 h-80 bg-blue-200 rounded-full mix-blend-multiply filter blur-xl"
+                    animate={{ opacity: [0.3, 0.5, 0.3] }}
+                    transition={{ repeat: Infinity, duration: 4 }}
+                />
+                <motion.div
+                    className="absolute -bottom-40 -left-40 w-80 h-80 bg-gray-300 rounded-full mix-blend-multiply filter blur-xl"
+                    animate={{ opacity: [0.3, 0.5, 0.3] }}
+                    transition={{ repeat: Infinity, duration: 4, delay: 2 }}
+                />
+                <motion.div
+                    className="absolute top-40 left-40 w-80 h-80 bg-indigo-200 rounded-full mix-blend-multiply filter blur-xl"
+                    animate={{ opacity: [0.3, 0.5, 0.3] }}
+                    transition={{ repeat: Infinity, duration: 4, delay: 4 }}
+                />
+            </motion.div>
 
             <div className="container mx-auto px-4 relative z-10">
                 {/* Header Section */}
-                <div className="text-center mb-16">
-                    <div className="inline-flex items-center gap-2 px-4 py-2 bg-blue-100/80 rounded-full mb-4">
+                <motion.div
+                    className="text-center mb-16"
+                    initial={{ opacity: 0, y: -50 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.8, ease: "easeOut" }}
+                >
+                    <motion.div
+                        className="inline-flex items-center gap-2 px-4 py-2 bg-blue-100/80 rounded-full mb-4"
+                        whileHover={{ scale: 1.05 }}
+                    >
                         <Shield className="w-5 h-5 text-blue-600" />
                         <span className="text-blue-700 font-medium">Premium Quality</span>
-                    </div>
+                    </motion.div>
                     <h2 className="text-4xl lg:text-6xl font-bold bg-gradient-to-r from-blue-800 via-gray-800 to-indigo-800 bg-clip-text text-transparent mb-4">
                         Men's Style Redefined
                     </h2>
                     <p className="text-xl text-gray-700 max-w-2xl mx-auto leading-relaxed mb-8">
                         Elevate your wardrobe with timeless pieces designed for the modern, confident man.
                     </p>
-                    
+
                     {/* Stats */}
                     <div className="flex justify-center gap-8 text-center">
-                        <div>
+                        <motion.div whileHover={{ scale: 1.1 }}>
                             <div className="text-3xl font-bold text-blue-700">{items.length}+</div>
                             <div className="text-gray-600 text-sm">Styles</div>
-                        </div>
-                        <div>
+                        </motion.div>
+                        <motion.div whileHover={{ scale: 1.1 }}>
                             <div className="text-3xl font-bold text-gray-700">4.6★</div>
                             <div className="text-gray-600 text-sm">Rating</div>
-                        </div>
-                        <div>
+                        </motion.div>
+                        <motion.div whileHover={{ scale: 1.1 }}>
                             <div className="text-3xl font-bold text-indigo-700">40%</div>
                             <div className="text-gray-600 text-sm">Off Sale</div>
-                        </div>
+                        </motion.div>
                     </div>
-                </div>
+                </motion.div>
 
                 {/* Enhanced Filter Buttons */}
-                <div className="flex justify-center flex-wrap gap-4 mb-12">
+                <motion.div
+                    className="flex justify-center flex-wrap gap-4 mb-12"
+                    variants={containerVariants}
+                    initial="hidden"
+                    animate="visible"
+                >
                     {categories.map((category) => (
-                        <button
+                        <motion.button
                             key={category}
                             onClick={() => handleFilterClick(category)}
-                            className={`group relative px-6 py-3 rounded-full font-semibold text-sm transition-all duration-300 transform hover:scale-105 ${
+                            className={`group relative px-6 py-3 rounded-full font-semibold text-sm transition-all duration-300 ${
                                 activeFilter === category
                                     ? 'bg-gradient-to-r from-blue-600 to-indigo-600 text-white shadow-lg'
                                     : 'bg-white/80 backdrop-blur-sm text-gray-700 border-2 border-transparent hover:border-blue-300 shadow-md'
                             }`}
+                            variants={buttonVariants}
+                            whileHover="hover"
+                            whileTap="tap"
                         >
                             <span className="relative z-10 flex items-center gap-2">
                                 <Filter className="w-4 h-4" />
@@ -148,151 +215,208 @@ const Menswear = () => {
                                 </span>
                             </span>
                             {activeFilter !== category && (
-                                <div className="absolute inset-0 bg-gradient-to-r from-blue-600 to-indigo-600 rounded-full opacity-0 group-hover:opacity-10 transition-opacity duration-300"></div>
+                                <motion.div
+                                    className="absolute inset-0 bg-gradient-to-r from-blue-600 to-indigo-600 rounded-full"
+                                    initial={{ opacity: 0 }}
+                                    whileHover={{ opacity: 0.1 }}
+                                    transition={{ duration: 0.3 }}
+                                />
                             )}
-                        </button>
+                        </motion.button>
                     ))}
-                </div>
+                </motion.div>
 
                 {/* Grid Section */}
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 lg:gap-8">
-                    {filteredItems.map((item, index) => (
-                        <div
-                            key={item.id}
-                            className={`group relative overflow-hidden rounded-3xl bg-white transition-all duration-500 ease-out hover:shadow-2xl hover:-translate-y-3 shadow-lg ${
-                                isVisible ? 'animate-slideInUp' : 'opacity-0'
-                            }`}
-                            style={{ animationDelay: `${index * 100}ms` }}
-                        >
-                            {/* Badges */}
-                            <div className="absolute top-4 left-4 z-20 flex flex-col gap-2">
-                                {item.isNew && (
-                                    <span className="bg-green-500 text-white px-3 py-1 rounded-full text-xs font-bold shadow-lg animate-pulse">
-                                        NEW
-                                    </span>
-                                )}
-                                {item.isSale && (
-                                    <span className="bg-red-500 text-white px-3 py-1 rounded-full text-xs font-bold shadow-lg">
-                                        SALE
-                                    </span>
-                                )}
-                            </div>
+                <AnimatePresence>
+                    <motion.div
+                        className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 lg:gap-8"
+                        variants={containerVariants}
+                        initial="hidden"
+                        animate={isVisible ? "visible" : "hidden"}
+                    >
+                        {filteredItems.map((item, index) => (
+                            <motion.div
+                                key={item.id}
+                                className="group relative overflow-hidden rounded-3xl bg-white shadow-lg"
+                                variants={itemVariants}
+                                whileHover={{ y: -12, boxShadow: "0 20px 25px -5px rgba(0, 0, 0, 0.1)" }}
+                                transition={{ type: "spring", stiffness: 200, damping: 20 }}
+                            >
+                                {/* Badges */}
+                                <motion.div
+                                    className="absolute top-4 left-4 z-20 flex flex-col gap-2"
+                                    variants={badgeVariants}
+                                    initial="hidden"
+                                    animate="visible"
+                                >
+                                    {item.isNew && (
+                                        <motion.span
+                                            className="bg-green-500 text-white px-3 py-1 rounded-full text-xs font-bold shadow-lg"
+                                            animate={{ scale: [1, 1.1, 1] }}
+                                            transition={{ repeat: Infinity, duration: 1.5 }}
+                                        >
+                                            NEW
+                                        </motion.span>
+                                    )}
+                                    {item.isSale && (
+                                        <span className="bg-red-500 text-white px-3 py-1 rounded-full text-xs font-bold shadow-lg">
+                                            SALE
+                                        </span>
+                                    )}
+                                </motion.div>
 
-                            {/* Image Container */}
-                            <div className="relative h-80 lg:h-96 overflow-hidden">
-                                <img
-                                    src={item.image}
-                                    alt={item.title}
-                                    className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700 ease-out"
-                                    loading="lazy"
-                                />
-                                
-                                {/* Overlay Gradient */}
-                                <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-                                
-                                {/* Quick Action Buttons */}
-                                <div className="absolute top-4 right-4 flex flex-col gap-2">
-                                    {/* Wishlist */}
-                                    <button className="w-10 h-10 bg-white/90 hover:bg-blue-500 text-gray-600 hover:text-white rounded-full flex items-center justify-center transform opacity-0 translate-x-4 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-300 shadow-lg backdrop-blur-sm">
-                                        <Heart className="w-5 h-5" />
-                                    </button>
+                                {/* Image Container */}
+                                <div className="relative h-80 lg:h-96 overflow-hidden">
+                                    <motion.img
+                                        src={item.image}
+                                        alt={item.title}
+                                        className="w-full h-full object-cover"
+                                        whileHover={{ scale: 1.1 }}
+                                        transition={{ duration: 0.7, ease: "easeOut" }}
+                                        loading="lazy"
+                                    />
                                     
-                                    {/* Quick View */}
-                                    <button className="w-10 h-10 bg-white/90 hover:bg-indigo-500 text-gray-600 hover:text-white rounded-full flex items-center justify-center transform opacity-0 translate-x-4 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-300 delay-75 shadow-lg backdrop-blur-sm">
-                                        <Eye className="w-5 h-5" />
-                                    </button>
+                                    {/* Overlay Gradient */}
+                                    <motion.div
+                                        className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent"
+                                        initial={{ opacity: 0 }}
+                                        whileHover={{ opacity: 1 }}
+                                        transition={{ duration: 0.5 }}
+                                    />
+                                    
+                                    {/* Quick Action Buttons */}
+                                    <motion.div
+                                        className="absolute top-4 right-4 flex flex-col gap-2"
+                                        initial={{ opacity: 0, x: 20 }}
+                                        whileHover={{ opacity: 1, x: 0 }}
+                                        transition={{ staggerChildren: 0.1 }}
+                                    >
+                                        {/* Wishlist */}
+                                        <motion.button
+                                            className="w-10 h-10 bg-white/90 hover:bg-blue-500 text-gray-600 hover:text-white rounded-full flex items-center justify-center shadow-lg backdrop-blur-sm"
+                                            variants={buttonVariants}
+                                            whileHover="hover"
+                                            whileTap="tap"
+                                        >
+                                            <Heart className="w-5 h-5" />
+                                        </motion.button>
+                                        
+                                        {/* Quick View */}
+                                        <motion.button
+                                            className="w-10 h-10 bg-white/90 hover:bg-indigo-500 text-gray-600 hover:text-white rounded-full flex items-center justify-center shadow-lg backdrop-blur-sm"
+                                            variants={buttonVariants}
+                                            whileHover="hover"
+                                            whileTap="tap"
+                                        >
+                                            <Eye className="w-5 h-5" />
+                                        </motion.button>
+                                    </motion.div>
+
+                                    {/* Category Badge */}
+                                    <motion.div
+                                        className="absolute bottom-4 left-4 bg-white/90 backdrop-blur-sm px-3 py-1 rounded-full text-xs font-semibold text-gray-700 shadow-lg"
+                                        initial={{ opacity: 0, y: 10 }}
+                                        whileHover={{ opacity: 1, y: 0 }}
+                                        transition={{ duration: 0.3 }}
+                                    >
+                                        {item.category}
+                                    </motion.div>
                                 </div>
 
-                                {/* Category Badge */}
-                                <div className="absolute bottom-4 left-4 bg-white/90 backdrop-blur-sm px-3 py-1 rounded-full text-xs font-semibold text-gray-700 shadow-lg opacity-0 group-hover:opacity-100 transition-all duration-300 transform translate-y-2 group-hover:translate-y-0">
-                                    {item.category}
-                                </div>
-                            </div>
-
-                            {/* Content Section */}
-                            <div className="p-6">
-                                <div className="flex items-start justify-between mb-3">
-                                    <div>
-                                        <h3 className="font-bold text-lg text-gray-800 mb-1 group-hover:text-blue-700 transition-colors duration-300">
-                                            {item.title}
-                                        </h3>
-                                        <div className="mb-2">
-                                            {renderStarRating(item.rating)}
+                                {/* Content Section */}
+                                <div className="p-6">
+                                    <div className="flex items-start justify-between mb-3">
+                                        <div>
+                                            <motion.h3
+                                                className="font-bold text-lg text-gray-800 mb-1"
+                                                whileHover={{ color: "#1D4ED8" }}
+                                                transition={{ duration: 0.3 }}
+                                            >
+                                                {item.title}
+                                            </motion.h3>
+                                            <div className="mb-2">
+                                                {renderStarRating(item.rating)}
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
 
-                                <div className="flex items-center justify-between">
-                                    <div className="flex items-center gap-2">
-                                        <span className="text-xl font-bold text-gray-800">{item.price}</span>
-                                        {item.originalPrice && (
-                                            <span className="text-sm text-gray-500 line-through">{item.originalPrice}</span>
-                                        )}
+                                    <div className="flex items-center justify-between">
+                                        <div className="flex items-center gap-2">
+                                            <span className="text-xl font-bold text-gray-800">{item.price}</span>
+                                            {item.originalPrice && (
+                                                <span className="text-sm text-gray-500 line-through">{item.originalPrice}</span>
+                                            )}
+                                        </div>
+                                        
+                                        {/* Add to Cart Button */}
+                                        <motion.button
+                                            className="group/btn bg-gradient-to-r from-blue-600 to-indigo-600 text-white rounded-full p-3 shadow-lg"
+                                            variants={buttonVariants}
+                                            whileHover="hover"
+                                            whileTap="tap"
+                                        >
+                                            <ShoppingBag className="w-5 h-5 group-hover/btn:rotate-12" />
+                                        </motion.button>
                                     </div>
-                                    
-                                    {/* Add to Cart Button */}
-                                    <button className="group/btn bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white rounded-full p-3 shadow-lg transform hover:scale-110 transition-all duration-300">
-                                        <ShoppingBag className="w-5 h-5 group-hover/btn:rotate-12 transition-transform duration-300" />
-                                    </button>
                                 </div>
-                            </div>
 
-                            {/* Hover Effect Overlay */}
-                            <div className="absolute inset-0 bg-gradient-to-t from-blue-500/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none rounded-3xl"></div>
-                        </div>
-                    ))}
-                </div>
+                                {/* Hover Effect Overlay */}
+                                <motion.div
+                                    className="absolute inset-0 bg-gradient-to-t from-blue-500/10 to-transparent rounded-3xl"
+                                    initial={{ opacity: 0 }}
+                                    whileHover={{ opacity: 1 }}
+                                    transition={{ duration: 0.3 }}
+                                />
+                            </motion.div>
+                        ))}
+                    </motion.div>
+                </AnimatePresence>
 
                 {/* Enhanced Call to Action */}
-                <div className="text-center mt-16">
+                <motion.div
+                    className="text-center mt-16"
+                    initial={{ opacity: 0, y: 50 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.8, delay: 0.5 }}
+                >
                     <div className="inline-block p-8 bg-white/80 backdrop-blur-sm rounded-3xl shadow-xl border border-blue-100">
-                        <div className="mb-6">
+                        <motion.div className="mb-6" whileHover={{ scale: 1.05 }}>
                             <h3 className="text-2xl font-bold text-gray-800 mb-2">Upgrade Your Style Game</h3>
                             <p className="text-gray-600">Join the ranks of well-dressed, confident men worldwide</p>
-                        </div>
+                        </motion.div>
                         
                         <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
-                            <button className="group relative px-8 py-4 bg-gradient-to-r from-blue-700 via-indigo-700 to-blue-800 text-white font-bold rounded-full shadow-xl hover:shadow-2xl transform hover:-translate-y-1 transition-all duration-300 overflow-hidden">
+                            <motion.button
+                                className="group relative px-8 py-4 bg-gradient-to-r from-blue-700 via-indigo-700 to-blue-800 text-white font-bold rounded-full shadow-xl overflow-hidden"
+                                variants={buttonVariants}
+                                whileHover="hover"
+                                whileTap="tap"
+                            >
                                 <span className="relative z-10 flex items-center gap-2">
                                     <Zap className="w-5 h-5" />
                                     Shop All Men's Collection
-                                    <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform duration-300" />
+                                    <ArrowRight className="w-5 h-5 group-hover:translate-x-1" />
                                 </span>
-                                <div className="absolute inset-0 bg-gradient-to-r from-indigo-800 to-blue-900 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-                            </button>
+                                <motion.div
+                                    className="absolute inset-0 bg-gradient-to-r from-indigo-800 to-blue-900"
+                                    initial={{ opacity: 0 }}
+                                    whileHover={{ opacity: 1 }}
+                                    transition={{ duration: 0.3 }}
+                                />
+                            </motion.button>
                             
-                            <button className="px-8 py-4 bg-white border-2 border-blue-300 text-blue-700 font-bold rounded-full hover:bg-blue-50 transform hover:scale-105 transition-all duration-300">
+                            <motion.button
+                                className="px-8 py-4 bg-white border-2 border-blue-300 text-blue-700 font-bold rounded-full"
+                                variants={buttonVariants}
+                                whileHover="hover"
+                                whileTap="tap"
+                            >
                                 Size Guide
-                            </button>
+                            </motion.button>
                         </div>
                     </div>
-                </div>
+                </motion.div>
             </div>
-
-            <style jsx>{`
-                .animation-delay-2000 {
-                    animation-delay: 2s;
-                }
-                
-                .animation-delay-4000 {
-                    animation-delay: 4s;
-                }
-                
-                @keyframes slideInUp {
-                    from {
-                        opacity: 0;
-                        transform: translateY(30px);
-                    }
-                    to {
-                        opacity: 1;
-                        transform: translateY(0);
-                    }
-                }
-                
-                .animate-slideInUp {
-                    animation: slideInUp 0.6s ease-out forwards;
-                }
-            `}</style>
         </div>
     );
 };

@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 import {
   ArrowRight,
   Star,
@@ -18,10 +19,7 @@ import {
   Baby,
   Sparkles
 } from "lucide-react";
-import Aos from "aos";
-import "aos/dist/aos.css"; 
 
-// Enhanced product data with fashion categories
 const productData = [
   // Electronics
   {
@@ -259,42 +257,55 @@ const shuffleArray = (array) => {
   const shuffled = [...array];
   for (let i = shuffled.length - 1; i > 0; i--) {
     const j = Math.floor(Math.random() * (i + 1));
-    [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+    [shuffled[i], shuffled[j]] = [shuffled[i], shuffled[j]];
   }
   return shuffled;
 };
 
 const Button = ({ text, bgColor, textColor, onClick }) => (
-  <button 
+  <motion.button 
     onClick={onClick}
-    className={`${bgColor} ${textColor} px-6 py-2.5 rounded-full font-medium text-sm tracking-wide transition-all duration-300 hover:scale-105 hover:shadow-lg flex items-center gap-2 group focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-orange-500`}
+    className={`${bgColor} ${textColor} px-6 py-2.5 rounded-full font-medium text-sm tracking-wide flex items-center gap-2 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-orange-500`}
+    variants={{
+      hover: { scale: 1.05, transition: { type: "spring", stiffness: 300 } },
+      tap: { scale: 0.95 }
+    }}
+    whileHover="hover"
+    whileTap="tap"
   >
     <ShoppingBag className="w-4 h-4" />
     {text}
-    <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform duration-300" />
-  </button>
+    <ArrowRight className="w-4 h-4" />
+  </motion.button>
 );
 
 const CategoryFilter = ({ categories, activeCategory, onCategoryChange }) => (
-  <div 
-    data-aos="fade-up" 
-    data-aos-delay="200" 
+  <motion.div 
     className="flex flex-wrap justify-center gap-3 mb-8"
+    initial={{ opacity: 0, y: 20 }}
+    animate={{ opacity: 1, y: 0 }}
+    transition={{ duration: 0.8, delay: 0.2 }}
   >
     {categories.map((category) => (
-      <button
+      <motion.button
         key={category}
         onClick={() => onCategoryChange(category)}
-        className={`px-6 py-2.5 rounded-full font-medium text-sm transition-all duration-300 transform hover:scale-105 ${
+        className={`px-6 py-2.5 rounded-full font-medium text-sm ${
           activeCategory === category
             ? 'bg-gradient-to-r from-orange-500 to-amber-500 text-white shadow-lg'
             : 'bg-white/80 text-gray-600 hover:bg-orange-50'
         }`}
+        variants={{
+          hover: { scale: 1.05, transition: { type: "spring", stiffness: 300 } },
+          tap: { scale: 0.95 }
+        }}
+        whileHover="hover"
+        whileTap="tap"
       >
         {category}
-      </button>
+      </motion.button>
     ))}
-  </div>
+  </motion.div>
 );
 
 const TopRated = () => {
@@ -306,15 +317,6 @@ const TopRated = () => {
   const categories = ["All", "Electronics", "Male Wear", "Female Wear", "Kids Wear"];
 
   useEffect(() => {
-    // Initialize AOS
-    Aos.init({
-      offset: 100,
-      duration: 800,
-      easing: "ease-out-quad",
-      delay: 100,
-      once: true,
-    });
-
     // Shuffle products on component mount
     const shuffled = shuffleArray(productData);
     setShuffledProducts(shuffled);
@@ -342,15 +344,57 @@ const TopRated = () => {
     }
   };
 
+  // Framer Motion variants for animations
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.1,
+      },
+    },
+  };
+
+  const itemVariants = {
+    hidden: { opacity: 0, y: 30 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: {
+        type: "spring",
+        stiffness: 100,
+        damping: 20,
+      },
+    },
+  };
+
+  const badgeVariants = {
+    hidden: { opacity: 0, y: 10 },
+    visible: { opacity: 1, y: 0, transition: { duration: 0.3 } },
+  };
+
   return (
-    <div className="py-20 bg-gradient-to-b from-orange-50/30 to-amber-50/20 min-h-screen">
+    <motion.div
+      className="py-20 bg-gradient-to-b from-orange-50/30 to-amber-50/20 min-h-screen"
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ duration: 1 }}
+    >
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section Header */}
-        <div data-aos="fade-up" className="text-center mb-12">
-          <div className="inline-flex items-center gap-2 px-4 py-1.5 bg-orange-100/50 rounded-full mb-3">
+        <motion.div
+          className="text-center mb-12"
+          initial={{ opacity: 0, y: -50 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, ease: "easeOut" }}
+        >
+          <motion.div
+            className="inline-flex items-center gap-2 px-4 py-1.5 bg-orange-100/50 rounded-full mb-3"
+            whileHover={{ scale: 1.05 }}
+          >
             <Flame className="w-4 h-4 text-orange-500" />
             <span className="text-sm font-medium text-orange-600">Top Collection</span>
-          </div>
+          </motion.div>
           <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-gray-900 mb-3">
             Best Selling <span className="text-orange-500">Products</span>
           </h2>
@@ -359,16 +403,20 @@ const TopRated = () => {
           </p>
           
           {/* Shuffle Button */}
-          <button
+          <motion.button
             onClick={handleReshuffle}
-            data-aos="fade-up"
-            data-aos-delay="100"
-            className="inline-flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-orange-500 to-orange-400 text-white rounded-full font-medium hover:scale-105 transition-all duration-300 shadow-lg"
+            className="inline-flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-orange-500 to-orange-400 text-white rounded-full font-medium shadow-lg"
+            variants={{
+              hover: { scale: 1.05, transition: { type: "spring", stiffness: 300 } },
+              tap: { scale: 0.95 }
+            }}
+            whileHover="hover"
+            whileTap="tap"
           >
             <Zap className="w-4 h-4" />
             Shuffle Products
-          </button>
-        </div>
+          </motion.button>
+        </motion.div>
 
         {/* Category Filter */}
         <CategoryFilter 
@@ -378,167 +426,235 @@ const TopRated = () => {
         />
 
         {/* Stats Bar */}
-        <div data-aos="fade-up" data-aos-delay="300" className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-12">
+        <motion.div
+          className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-12"
+          variants={containerVariants}
+          initial="hidden"
+          animate="visible"
+        >
           {[
             { label: "Total Products", value: filteredProducts.length, icon: ShoppingBag },
             { label: "Categories", value: categories.length - 1, icon: Users },
             { label: "Avg Rating", value: "4.7★", icon: Star },
             { label: "Active Deals", value: "100%", icon: Flame }
           ].map((stat, index) => (
-            <div 
-              key={index} 
-              data-aos="fade-up" 
-              data-aos-delay={`${400 + index * 100}`}
+            <motion.div 
+              key={index}
               className="bg-white/80 backdrop-blur-sm rounded-2xl p-4 text-center border border-orange-100"
+              variants={itemVariants}
             >
               <stat.icon className="w-6 h-6 text-orange-500 mx-auto mb-2" />
               <div className="text-2xl font-bold text-gray-900">{stat.value}</div>
               <div className="text-sm text-gray-600">{stat.label}</div>
-            </div>
+            </motion.div>
           ))}
-        </div>
+        </motion.div>
 
         {/* Products Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-8">
-          {filteredProducts.map((product, index) => (
-            <div 
-              key={`${product.id}-${index}`}
-              className={`${product.isLarge ? 'col-span-1 lg:col-span-2' : ''} group relative`}
-              onMouseEnter={() => setHoveredCard(product.id)}
-              onMouseLeave={() => setHoveredCard(null)}
-              data-aos="zoom-in"
-              data-aos-delay={`${200 + index * 100}`}
-            >
-              <div className={`
-                relative h-[420px] rounded-3xl overflow-hidden
-                bg-gradient-to-br ${product.bgGradient}
-                transform transition-all duration-500 hover:scale-[1.03] hover:-translate-y-2
-                shadow-lg hover:shadow-2xl
-                ${hoveredCard === product.id ? 'shadow-orange-400/30' : ''}
-                border border-white/10
-              `}>
-                {/* Animated Background Pattern */}
-                <div className="absolute inset-0 opacity-10">
-                  <div className="absolute top-6 right-6 w-24 h-24 border border-white/20 rounded-full animate-pulse"></div>
-                  <div className="absolute bottom-10 left-10 w-16 h-16 border border-white/20 rounded-full animate-pulse animation-delay-1000"></div>
-                  <div className="absolute top-1/2 left-6 w-8 h-8 border border-white/20 rounded-full animate-pulse animation-delay-2000"></div>
-                </div>
-
-                {/* Badges */}
-                <div className="absolute top-4 left-4 flex flex-col gap-2">
-                  <div className="bg-red-600 text-white px-3 py-1 rounded-full text-xs font-semibold shadow-md animate-pulse">
-                    {product.discount}
-                  </div>
-                  {product.isNew && (
-                    <div className="bg-green-600 text-white px-3 py-1 rounded-full text-xs font-semibold shadow-md">
-                      NEW
-                    </div>
-                  )}
-                </div>
-
-                {/* Category & Rating Badge */}
-                <div className="absolute top-4 right-4 flex flex-col gap-2 items-end">
-                  <div className="bg-white/90 backdrop-blur-sm text-gray-800 px-3 py-1 rounded-full text-xs font-medium shadow-md">
-                    {product.category}
-                  </div>
-                  <div className="bg-white/90 backdrop-blur-sm text-gray-800 px-2.5 py-1 rounded-full text-xs font-medium flex items-center gap-1 shadow-md">
-                    <Star className="w-3.5 h-3.5 text-yellow-400 fill-current" />
-                    {product.rating}
-                  </div>
-                </div>
-
-                {/* Content */}
-                <div className="relative z-10 p-6 sm:p-8 h-full flex flex-col justify-between">
-                  <div>
-                    <div className={`flex items-center gap-3 mb-4 ${product.textColor}`}>
-                      <product.icon className="w-8 h-8" />
-                      <div className="w-12 h-[2px] bg-current opacity-50"></div>
-                    </div>
-                    
-                    <p className={`text-xs uppercase tracking-widest opacity-80 mb-2 ${product.textColor} font-semibold`}>
-                      {product.subtitle}
-                    </p>
-                    <p className={`text-xl font-semibold mb-1 ${product.textColor} opacity-90`}>
-                      With
-                    </p>
-                    <h3 className={`text-3xl sm:text-4xl font-black mb-3 ${product.textColor} leading-tight`}>
-                      {product.title}
-                    </h3>
-                    <p className={`text-base font-medium mb-5 ${product.textColor} opacity-80`}>
-                      {product.description}
-                    </p>
-                  </div>
-
-                  <div className="space-y-4">
-                    <div className={`flex items-center justify-between ${product.textColor}`}>
-                      <span className="text-2xl font-bold">{product.price}</span>
-                      <div className="flex items-center gap-2">
-                        <TrendingUp className="w-4 h-4 text-green-400" />
-                        <span className="text-xs opacity-70 font-medium">Popular</span>
-                      </div>
-                    </div>
-                    
-                    <Button 
-                      text="Shop Now" 
-                      bgColor={product.buttonBg} 
-                      textColor={product.buttonText}
-                      onClick={() => console.log(`Shopping for ${product.title}`)}
-                    />
-                  </div>
-                </div>
-
-                {/* Product Image */}
-                <div className="absolute bottom-0 right-0 w-56 h-56 sm:w-64 sm:h-64 overflow-hidden rounded-tl-3xl">
-                  <img 
-                    src={product.image} 
-                    alt={product.title}
-                    loading="lazy"
-                    className={`
-                      w-full h-full object-cover object-center
-                      transform transition-all duration-700
-                      ${hoveredCard === product.id ? 'scale-110 rotate-2' : 'scale-100'}
-                      ${product.isLarge ? 'opacity-90' : 'opacity-85'}
-                    `}
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent"></div>
-                </div>
-
-                {/* Hover Effects */}
+        <AnimatePresence>
+          <motion.div
+            className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-8"
+            variants={containerVariants}
+            initial="hidden"
+            animate="visible"
+          >
+            {filteredProducts.map((product, index) => (
+              <motion.div 
+                key={`${product.id}-${index}`}
+                className={`${product.isLarge ? 'col-span-1 lg:col-span-2' : ''} group relative`}
+                onMouseEnter={() => setHoveredCard(product.id)}
+                onMouseLeave={() => setHoveredCard(null)}
+                variants={itemVariants}
+                whileHover={{ y: -12, boxShadow: "0 20px 25px -5px rgba(0, 0, 0, 0.1)" }}
+                transition={{ type: "spring", stiffness: 200, damping: 20 }}
+              >
                 <div className={`
-                  absolute inset-0 bg-gradient-to-t from-black/20 to-transparent
-                  opacity-0 group-hover:opacity-100 transition-opacity duration-300
-                `}></div>
-
-                {/* Floating Sparkle Effect */}
-                <div className={`
-                  absolute top-1/3 -right-4 w-8 h-8 bg-white/20 backdrop-blur-sm rounded-full
-                  flex items-center justify-center transform transition-all duration-500
-                  ${hoveredCard === product.id ? 'translate-x-0 opacity-100 rotate-180' : 'translate-x-8 opacity-0'}
+                  relative h-[420px] rounded-3xl overflow-hidden
+                  bg-gradient-to-br ${product.bgGradient}
+                  shadow-lg border border-white/10
                 `}>
-                  <Sparkles className="w-4 h-4 text-white" />
-                </div>
+                  {/* Animated Background Pattern */}
+                  <motion.div
+                    className="absolute inset-0 opacity-10"
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 0.1 }}
+                    transition={{ duration: 0.5 }}
+                  >
+                    <motion.div
+                      className="absolute top-6 right-6 w-24 h-24 border border-white/20 rounded-full"
+                      animate={{ scale: [1, 1.1, 1] }}
+                      transition={{ repeat: Infinity, duration: 2 }}
+                    />
+                    <motion.div
+                      className="absolute bottom-10 left-10 w-16 h-16 border border-white/20 rounded-full"
+                      animate={{ scale: [1, 1.1, 1] }}
+                      transition={{ repeat: Infinity, duration: 2, delay: 1 }}
+                    />
+                    <motion.div
+                      className="absolute top-1/2 left-6 w-8 h-8 border border-white/20 rounded-full"
+                      animate={{ scale: [1, 1.1, 1] }}
+                      transition={{ repeat: Infinity, duration: 2, delay: 2 }}
+                    />
+                  </motion.div>
 
-                {/* Shine Effect */}
-                <div className="absolute inset-0 bg-gradient-to-tr from-transparent via-white/10 to-transparent opacity-0 group-hover:opacity-100 transform -translate-x-full group-hover:translate-x-full transition-all duration-1000"></div>
-              </div>
-            </div>
-          ))}
-        </div>
+                  {/* Badges */}
+                  <motion.div
+                    className="absolute top-4 left-4 flex flex-col gap-2"
+                    variants={badgeVariants}
+                    initial="hidden"
+                    animate="visible"
+                  >
+                    <motion.div
+                      className="bg-red-600 text-white px-3 py-1 rounded-full text-xs font-semibold shadow-md"
+                      animate={{ scale: [1, 1.1, 1] }}
+                      transition={{ repeat: Infinity, duration: 1.5 }}
+                    >
+                      {product.discount}
+                    </motion.div>
+                    {product.isNew && (
+                      <div className="bg-green-600 text-white px-3 py-1 rounded-full text-xs font-semibold shadow-md">
+                        NEW
+                      </div>
+                    )}
+                  </motion.div>
+
+                  {/* Category & Rating Badge */}
+                  <motion.div
+                    className="absolute top-4 right-4 flex flex-col gap-2 items-end"
+                    variants={badgeVariants}
+                    initial="hidden"
+                    animate="visible"
+                  >
+                    <div className="bg-white/90 backdrop-blur-sm text-gray-800 px-3 py-1 rounded-full text-xs font-medium shadow-md">
+                      {product.category}
+                    </div>
+                    <div className="bg-white/90 backdrop-blur-sm text-gray-800 px-2.5 py-1 rounded-full text-xs font-medium flex items-center gap-1 shadow-md">
+                      <Star className="w-3.5 h-3.5 text-yellow-400 fill-current" />
+                      {product.rating}
+                    </div>
+                  </motion.div>
+
+                  {/* Content */}
+                  <div className="relative z-10 p-6 sm:p-8 h-full flex flex-col justify-between">
+                    <div>
+                      <div className={`flex items-center gap-3 mb-4 ${product.textColor}`}>
+                        <product.icon className="w-8 h-8" />
+                        <div className="w-12 h-[2px] bg-current opacity-50"></div>
+                      </div>
+                      
+                      <p className={`text-xs uppercase tracking-widest opacity-80 mb-2 ${product.textColor} font-semibold`}>
+                        {product.subtitle}
+                      </p>
+                      <p className={`text-xl font-semibold mb-1 ${product.textColor} opacity-90`}>
+                        With
+                      </p>
+                      <motion.h3
+                        className={`text-3xl sm:text-4xl font-black mb-3 ${product.textColor} leading-tight`}
+                        whileHover={{ scale: 1.05 }}
+                        transition={{ duration: 0.3 }}
+                      >
+                        {product.title}
+                      </motion.h3>
+                      <p className={`text-base font-medium mb-5 ${product.textColor} opacity-80`}>
+                        {product.description}
+                      </p>
+                    </div>
+
+                    <div className="space-y-4">
+                      <div className={`flex items-center justify-between ${product.textColor}`}>
+                        <span className="text-2xl font-bold">{product.price}</span>
+                        <div className="flex items-center gap-2">
+                          <TrendingUp className="w-4 h-4 text-green-400" />
+                          <span className="text-xs opacity-70 font-medium">Popular</span>
+                        </div>
+                      </div>
+                      
+                      <Button 
+                        text="Shop Now" 
+                        bgColor={product.buttonBg} 
+                        textColor={product.buttonText}
+                        onClick={() => console.log(`Shopping for ${product.title}`)}
+                      />
+                    </div>
+                  </div>
+
+                  {/* Product Image */}
+                  <motion.div
+                    className="absolute bottom-0 right-0 w-56 h-56 sm:w-64 sm:h-64 overflow-hidden rounded-tl-3xl"
+                    whileHover={{ scale: 1.1, rotate: 2 }}
+                    transition={{ duration: 0.7, ease: "easeOut" }}
+                  >
+                    <img 
+                      src={product.image} 
+                      alt={product.title}
+                      loading="lazy"
+                      className={`w-full h-full object-cover object-center ${product.isLarge ? 'opacity-90' : 'opacity-85'}`}
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent"></div>
+                  </motion.div>
+
+                  {/* Hover Effects */}
+                  <motion.div
+                    className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent"
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: hoveredCard === product.id ? 1 : 0 }}
+                    transition={{ duration: 0.3 }}
+                  />
+
+                  {/* Floating Sparkle Effect */}
+                  <motion.div
+                    className="absolute top-1/3 -right-4 w-8 h-8 bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center"
+                    initial={{ opacity: 0, x: 8 }}
+                    animate={{ opacity: hoveredCard === product.id ? 1 : 0, x: hoveredCard === product.id ? 0 : 8, rotate: hoveredCard === product.id ? 180 : 0 }}
+                    transition={{ duration: 0.5 }}
+                  >
+                    <Sparkles className="w-4 h-4 text-white" />
+                  </motion.div>
+
+                  {/* Shine Effect */}
+                  <motion.div
+                    className="absolute inset-0 bg-gradient-to-tr from-transparent via-white/10 to-transparent"
+                    initial={{ x: "-100%" }}
+                    animate={{ x: hoveredCard === product.id ? "100%" : "-100%" }}
+                    transition={{ duration: 1, ease: "linear" }}
+                  />
+                </div>
+              </motion.div>
+            ))}
+          </motion.div>
+        </AnimatePresence>
 
         {/* Enhanced Bottom CTA Section */}
-        <div data-aos="fade-up" data-aos-delay="600" className="text-center mt-16">
+        <motion.div
+          className="text-center mt-16"
+          initial={{ opacity: 0, y: 50 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, delay: 0.6 }}
+        >
           <div className="inline-flex flex-col sm:flex-row items-center gap-4 bg-gradient-to-r from-white/90 to-orange-50/90 px-8 py-6 rounded-2xl shadow-xl border border-orange-200/50">
-            <div className="flex items-center gap-3">
+            <motion.div className="flex items-center gap-3" whileHover={{ scale: 1.05 }}>
               <div className="flex -space-x-2">
-                <div className="w-10 h-10 bg-orange-500 rounded-full flex items-center justify-center text-white font-bold shadow-lg">
+                <motion.div
+                  className="w-10 h-10 bg-orange-500 rounded-full flex items-center justify-center text-white font-bold shadow-lg"
+                  animate={{ scale: [1, 1.1, 1] }}
+                  transition={{ repeat: Infinity, duration: 2 }}
+                >
                   <Heart className="w-5 h-5 fill-current" />
-                </div>
-                <div className="w-10 h-10 bg-pink-500 rounded-full flex items-center justify-center text-white font-bold shadow-lg">
+                </motion.div>
+                <motion.div
+                  className="w-10 h-10 bg-pink-500 rounded-full flex items-center justify-center text-white font-bold shadow-lg"
+                  animate={{ scale: [1, 1.1, 1] }}
+                  transition={{ repeat: Infinity, duration: 2, delay: 0.5 }}
+                >
                   <Star className="w-5 h-5 fill-current" />
-                </div>
-                <div className="w-10 h-10 bg-purple-500 rounded-full flex items-center justify-center text-white font-bold shadow-lg">
+                </motion.div>
+                <motion.div
+                  className="w-10 h-10 bg-purple-500 rounded-full flex items-center justify-center text-white font-bold shadow-lg"
+                  animate={{ scale: [1, 1.1, 1] }}
+                  transition={{ repeat: Infinity, duration: 2, delay: 1 }}
+                >
                   <Sparkles className="w-5 h-5 fill-current" />
-                </div>
+                </motion.div>
               </div>
               <div className="text-left">
                 <p className="text-lg font-bold text-gray-800">
@@ -548,25 +664,39 @@ const TopRated = () => {
                   Join thousands of happy customers
                 </p>
               </div>
-            </div>
+            </motion.div>
             
             <div className="flex gap-3">
-              <button 
+              <motion.button 
                 onClick={handleReshuffle}
-                className="bg-gradient-to-r from-purple-500 to-pink-500 text-white px-6 py-3 rounded-xl font-bold hover:scale-105 transition-all duration-300 flex items-center gap-2 shadow-lg"
+                className="bg-gradient-to-r from-purple-500 to-pink-500 text-white px-6 py-3 rounded-xl font-bold flex items-center gap-2 shadow-lg"
+                variants={{
+                  hover: { scale: 1.05, transition: { type: "spring", stiffness: 300 } },
+                  tap: { scale: 0.95 }
+                }}
+                whileHover="hover"
+                whileTap="tap"
               >
                 <Zap className="w-4 h-4" />
                 Surprise Me
-              </button>
-              <button className="bg-gradient-to-r from-orange-500 to-amber-500 text-white px-6 py-3 rounded-xl font-bold hover:scale-105 transition-all duration-300 flex items-center gap-2 shadow-lg">
+              </motion.button>
+              <motion.button
+                className="bg-gradient-to-r from-orange-500 to-amber-500 text-white px-6 py-3 rounded-xl font-bold flex items-center gap-2 shadow-lg"
+                variants={{
+                  hover: { scale: 1.05, transition: { type: "spring", stiffness: 300 } },
+                  tap: { scale: 0.95 }
+                }}
+                whileHover="hover"
+                whileTap="tap"
+              >
                 View All Products
                 <ArrowRight className="w-4 h-4" />
-              </button>
+              </motion.button>
             </div>
           </div>
-        </div>
+        </motion.div>
       </div>
-    </div>
+    </motion.div>
   );
 };
 

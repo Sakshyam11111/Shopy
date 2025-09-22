@@ -1,20 +1,29 @@
 import { useEffect, useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 
-// Enhanced Button component with better animations
+// Enhanced Button component with Framer Motion
 const Button = ({ text, bgColor, textColor, className, onClick, children }) => (
-  <button 
-    className={`${bgColor} ${textColor} ${className} transform transition-all duration-300 active:scale-95 relative overflow-hidden group`}
+  <motion.button
+    className={`${bgColor} ${textColor} ${className} relative overflow-hidden group rounded-2xl`}
     onClick={onClick}
+    whileHover={{ scale: 1.05, boxShadow: "0px 10px 20px rgba(0, 0, 0, 0.2)" }}
+    whileTap={{ scale: 0.95 }}
+    transition={{ type: "spring", stiffness: 300 }}
   >
-    <div className="absolute inset-0 bg-white opacity-0 group-hover:opacity-20 transition-opacity duration-300"></div>
+    <motion.div
+      className="absolute inset-0 bg-white"
+      initial={{ opacity: 0 }}
+      whileHover={{ opacity: 0.2 }}
+      transition={{ duration: 0.3 }}
+    />
     <span className="relative z-10 flex items-center justify-center">
       {text}
       {children}
     </span>
-  </button>
+  </motion.button>
 );
 
-// Enhanced product images with more variety
+// Product images (unchanged)
 const productImages = {
   earphone: "https://images.unsplash.com/photo-1583394838336-acd977736f90?w=300&h=240&fit=crop&crop=center",
   watch: "https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=300&h=240&fit=crop&crop=center",
@@ -28,7 +37,6 @@ const productImages = {
   drone: "https://images.unsplash.com/photo-1473968512647-3e447244af8f?w=300&h=240&fit=crop&crop=center",
   keyboard: "https://images.unsplash.com/photo-1541140532154-b024d705b90a?w=300&h=240&fit=crop&crop=center",
   mouse: "https://images.unsplash.com/photo-1527814050087-3793815479db?w=300&h=240&fit=crop&crop=center",
-  // Additional hero images
   headset: "https://images.unsplash.com/photo-1484704849700-f032a568e944?w=400&h=300&fit=crop&crop=center",
   console: "https://images.unsplash.com/photo-1606144042614-b2417e99c4e3?w=400&h=300&fit=crop&crop=center",
   airpods: "https://images.unsplash.com/photo-1600294037681-c80b4cb5b434?w=300&h=240&fit=crop&crop=center",
@@ -45,18 +53,18 @@ const Electronics = () => {
     productImages.headset,
     productImages.console,
     productImages.airpods,
-    productImages.smartwatch
+    productImages.smartwatch,
   ];
 
   useEffect(() => {
-    // Simulate AOS initialization
+    // Trigger card animations
     const timer = setTimeout(() => {
       setAnimateCards(true);
     }, 100);
 
     // Hero image rotation
     const heroTimer = setInterval(() => {
-      setCurrentHeroImage(prev => (prev + 1) % heroImages.length);
+      setCurrentHeroImage((prev) => (prev + 1) % heroImages.length);
     }, 4000);
 
     return () => {
@@ -66,9 +74,9 @@ const Electronics = () => {
   }, []);
 
   const handleImageError = (productId) => {
-    setImageErrors(prev => ({
+    setImageErrors((prev) => ({
       ...prev,
-      [productId]: true
+      [productId]: true,
     }));
   };
 
@@ -87,7 +95,7 @@ const Electronics = () => {
       pattern: "dots",
       price: "From Rs99",
       rating: 4.8,
-      reviews: 2847
+      reviews: 2847,
     },
     {
       id: 2,
@@ -103,7 +111,7 @@ const Electronics = () => {
       pattern: "waves",
       price: "From Rs299",
       rating: 4.9,
-      reviews: 1923
+      reviews: 1923,
     },
     {
       id: 3,
@@ -120,7 +128,7 @@ const Electronics = () => {
       span: "col-span-1 lg:col-span-2",
       price: "From Rs899",
       rating: 4.7,
-      reviews: 3521
+      reviews: 3521,
     },
     {
       id: 4,
@@ -137,7 +145,7 @@ const Electronics = () => {
       span: "col-span-1 lg:col-span-2",
       price: "From Rs1,299",
       rating: 4.9,
-      reviews: 4102
+      reviews: 4102,
     },
     {
       id: 5,
@@ -153,7 +161,7 @@ const Electronics = () => {
       pattern: "triangles",
       price: "From Rs399",
       rating: 4.6,
-      reviews: 1456
+      reviews: 1456,
     },
     {
       id: 6,
@@ -169,7 +177,7 @@ const Electronics = () => {
       pattern: "circles",
       price: "From Rs149",
       rating: 4.5,
-      reviews: 987
+      reviews: 987,
     },
     {
       id: 7,
@@ -185,7 +193,7 @@ const Electronics = () => {
       pattern: "dots",
       price: "From Rs699",
       rating: 4.8,
-      reviews: 5234
+      reviews: 5234,
     },
     {
       id: 8,
@@ -201,7 +209,7 @@ const Electronics = () => {
       pattern: "waves",
       price: "From Rs549",
       rating: 4.7,
-      reviews: 2134
+      reviews: 2134,
     },
     {
       id: 9,
@@ -210,15 +218,15 @@ const Electronics = () => {
       description: "Professional photography",
       gradient: "from-orange-500 via-red-500 to-pink-600",
       buttonBg: "bg-white hover:bg-gray-50",
-      buttonText: "text-orange-600",
+      buttonText: "text-orange-lampe-600",
       textColor: "text-white",
       image: productImages.camera,
       accent: "orange",
       pattern: "grid",
-      span: "col-span-1 lg:col-span-2",
+ shinespan: "col-span-1 lg:col-span-2",
       price: "From Rs1,199",
       rating: 4.9,
-      reviews: 1876
+      reviews: 1876,
     },
     {
       id: 10,
@@ -235,7 +243,7 @@ const Electronics = () => {
       span: "col-span-1 lg:col-span-2",
       price: "From Rs799",
       rating: 4.4,
-      reviews: 756
+      reviews: 756,
     },
     {
       id: 11,
@@ -251,7 +259,7 @@ const Electronics = () => {
       pattern: "hexagon",
       price: "From Rs129",
       rating: 4.6,
-      reviews: 1234
+      reviews: 1234,
     },
     {
       id: 12,
@@ -267,408 +275,798 @@ const Electronics = () => {
       pattern: "circles",
       price: "From Rs79",
       rating: 4.3,
-      reviews: 892
-    }
+      reviews: 892,
+    },
   ];
 
   const getPatternOverlay = (pattern, accent) => {
     const patterns = {
       dots: (
-        <div className="absolute inset-0 opacity-10">
-          <div className="absolute top-4 left-4 w-2 h-2 bg-white rounded-full animate-pulse"></div>
-          <div className="absolute top-8 left-16 w-1 h-1 bg-white rounded-full animate-pulse" style={{animationDelay: '0.5s'}}></div>
-          <div className="absolute top-16 left-8 w-1.5 h-1.5 bg-white rounded-full animate-pulse" style={{animationDelay: '1s'}}></div>
-          <div className="absolute top-20 left-20 w-1 h-1 bg-white rounded-full animate-pulse" style={{animationDelay: '1.5s'}}></div>
-          <div className="absolute top-12 left-24 w-1.5 h-1.5 bg-white rounded-full animate-pulse" style={{animationDelay: '2s'}}></div>
-        </div>
+        <motion.div
+          className="absolute inset-0 opacity-10"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 0.1 }}
+          transition={{ duration: 1, repeat: Infinity, repeatType: "reverse" }}
+        >
+          {[...Array(5)].map((_, i) => (
+            <motion.div
+              key={i}
+              className="absolute w-1.5 h-1.5 bg-white rounded-full"
+              style={{
+                top: [4, 8, 16, 20, 12][i] * 4,
+                left: [4, 16, 8, 20, 24][i] * 4,
+              }}
+              animate={{ scale: [1, 1.5, 1] }}
+              transition={{ duration: 1, delay: i * 0.5, repeat: Infinity }}
+            />
+          ))}
+        </motion.div>
       ),
       waves: (
-        <div className="absolute inset-0 opacity-20">
+        <motion.div
+          className="absolute inset-0 opacity-20"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 0.2 }}
+          transition={{ duration: 1 }}
+        >
           <svg className="w-full h-full" viewBox="0 0 100 100" preserveAspectRatio="none">
-            <path d="M0,20 Q25,10 50,20 T100,20 V0 H0 Z" fill="white" opacity="0.1"/>
-            <path d="M0,40 Q25,30 50,40 T100,40 V20 H0 Z" fill="white" opacity="0.05"/>
+            <motion.path
+              d="M0,20 Q25,10 50,20 T100,20 V0 H0 Z"
+              fill="white"
+              opacity={0.1}
+              animate={{ d: ["M0,20 Q25,10 50,20 T100,20 V0 H0 Z", "M0,15 Q25,25 50,15 T100,15 V0 H0 Z"] }}
+              transition={{ duration: 2, repeat: Infinity, repeatType: "reverse" }}
+            />
+            <motion.path
+              d="M0,40 Q25,30 50,40 T100,40 V20 H0 Z"
+              fill="white"
+              opacity={0.05}
+              animate={{ d: ["M0,40 Q25,30 50,40 T100,40 V20 H0 Z", "M0,35 Q25,45 50,35 T100,35 V20 H0 Z"] }}
+              transition={{ duration: 2, delay: 0.5, repeat: Infinity, repeatType: "reverse" }}
+            />
           </svg>
-        </div>
+        </motion.div>
       ),
       grid: (
-        <div className="absolute inset-0 opacity-10">
-          <div className="grid grid-cols-8 grid-rows-8 w-full h-full gap-2 p-4">
-            {Array.from({length: 16}).map((_, i) => (
-              <div key={i} className="bg-white rounded-sm opacity-50"></div>
-            ))}
-          </div>
-        </div>
+        <motion.div
+          className="absolute inset-0 opacity-10 grid grid-cols-8 grid-rows-8 gap-2 p-4"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 0.1 }}
+          transition={{ duration: 1 }}
+        >
+          {[...Array(16)].map((_, i) => (
+            <motion.div
+              key={i}
+              className="bg-white rounded-sm"
+              initial={{ opacity: 0.5, scale: 0.8 }}
+              animate={{ opacity: 0.5, scale: 1 }}
+              transition={{ duration: 1, delay: i * 0.05, repeat: Infinity, repeatType: "reverse" }}
+            />
+          ))}
+        </motion.div>
       ),
       hexagon: (
-        <div className="absolute inset-0 opacity-15">
-          <div className="absolute top-8 right-8 animate-spin" style={{animationDuration: '20s'}}>
-            <div className="w-12 h-12 bg-white transform rotate-45 rounded-lg"></div>
-          </div>
-          <div className="absolute bottom-16 right-16 animate-bounce">
-            <div className="w-8 h-8 bg-white transform rotate-12 rounded-md"></div>
-          </div>
-          <div className="absolute top-16 right-20 animate-pulse">
-            <div className="w-6 h-6 bg-white transform rotate-45 rounded-md opacity-50"></div>
-          </div>
-        </div>
+        <motion.div
+          className="absolute inset-0 opacity-15"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 0.15 }}
+          transition={{ duration: 1 }}
+        >
+          {[
+            { top: 8, right: 8, size: 12, rotate: 45, duration: 20 },
+            { top: "auto", bottom: 16, right: 16, size: 8, rotate: 12, duration: 2 },
+            { top: 16, right: 20, size: 6, rotate: 45, duration: 1, opacity: 0.5 },
+          ].map((hex, i) => (
+            <motion.div
+              key={i}
+              className="absolute"
+              style={{
+                top: hex.top ? `${hex.top * 4}px` : "auto",
+                bottom: hex.bottom ? `${hex.bottom * 4}px` : "auto",
+                right: `${hex.right * 4}px`,
+              }}
+              animate={
+                i === 0
+                  ? { rotate: [0, 360] }
+                  : i === 1
+                  ? { y: [-10, 10] }
+                  : { scale: [1, 1.5, 1] }
+              }
+              transition={{
+                duration: hex.duration,
+                repeat: Infinity,
+                repeatType: i === 1 ? "reverse" : undefined,
+              }}
+            >
+              <div
+                className="bg-white rounded-lg"
+                style={{
+                  width: `${hex.size * 4}px`,
+                  height: `${hex.size * 4}px`,
+                  transform: `rotate(${hex.rotate}deg)`,
+                  opacity: hex.opacity || 1,
+                }}
+              />
+            </motion.div>
+          ))}
+        </motion.div>
       ),
       triangles: (
-        <div className="absolute inset-0 opacity-15">
-          <div className="absolute top-6 right-12 w-0 h-0 border-l-4 border-r-4 border-b-8 border-l-transparent border-r-transparent border-b-white animate-pulse"></div>
-          <div className="absolute top-20 right-6 w-0 h-0 border-l-3 border-r-3 border-b-6 border-l-transparent border-r-transparent border-b-white animate-pulse" style={{animationDelay: '1s'}}></div>
-          <div className="absolute top-12 right-24 w-0 h-0 border-l-2 border-r-2 border-b-4 border-l-transparent border-r-transparent border-b-white animate-pulse" style={{animationDelay: '2s'}}></div>
-        </div>
+        <motion.div
+          className="absolute inset-0 opacity-15"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 0.15 }}
+          transition={{ duration: 1 }}
+        >
+          {[
+            { right: 12, size: 4, delay: 0 },
+            { right: 6, size: 3, delay: 1 },
+            { right: 24, size: 2, delay: 2 },
+          ].map((tri, i) => (
+            <motion.div
+              key={i}
+              className="absolute w-0 h-0 border-l-transparent border-r-transparent border-b-white"
+              style={{
+                top: `${6 + i * 4}rem`,
+                right: `${tri.right * 4}px`,
+                borderLeftWidth: tri.size * 4,
+                borderRightWidth: tri.size * 4,
+                borderBottomWidth: tri.size * 8,
+              }}
+              animate={{ scale: [1, 1.3, 1] }}
+              transition={{ duration: 1, delay: tri.delay, repeat: Infinity }}
+            />
+          ))}
+        </motion.div>
       ),
       circles: (
-        <div className="absolute inset-0 opacity-15">
-          <div className="absolute top-6 left-6 w-16 h-16 border-2 border-white rounded-full animate-ping"></div>
-          <div className="absolute bottom-12 left-12 w-8 h-8 border border-white rounded-full animate-pulse"></div>
-          <div className="absolute top-20 left-16 w-4 h-4 border border-white rounded-full animate-bounce"></div>
-        </div>
-      )
+        <motion.div
+          className="absolute inset-0 opacity-15"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 0.15 }}
+          transition={{ duration: 1 }}
+        >
+          {[
+            { left: 6, size: 16, top: 6, type: "ping" },
+            { left: 12, size: 8, bottom: 12, type: "pulse" },
+            { left: 16, size: 4, top: 20, type: "bounce" },
+          ].map((circle, i) => (
+            <motion.div
+              key={i}
+              className="absolute border border-white rounded-full"
+              style={{
+                left: `${circle.left * 4}px`,
+                top: circle.top ? `${circle.top * 4}px` : "auto",
+                bottom: circle.bottom ? `${circle.bottom * 4}px` : "auto",
+                width: `${circle.size * 4}px`,
+                height: `${circle.size * 4}px`,
+              }}
+              animate={
+                circle.type === "ping"
+                  ? { scale: [1, 1.5, 1], opacity: [1, 0.5, 1] }
+                  : circle.type === "bounce"
+                  ? { y: [-10, 10] }
+                  : { scale: [1, 1.3, 1] }
+              }
+              transition={{
+                duration: circle.type === "bounce" ? 1 : 2,
+                repeat: Infinity,
+                repeatType: circle.type === "bounce" ? "reverse" : undefined,
+              }}
+            />
+          ))}
+        </motion.div>
+      ),
     };
     return patterns[pattern] || null;
   };
 
   const getFallbackImage = (title) => {
     const colors = {
-      'Earphone': '#6366f1',
-      'Watch': '#f59e0b',
-      'Laptop': '#dc2626',
-      'Gaming': '#374151',
-      'VR Headset': '#059669',
-      'Speaker': '#2563eb',
-      'Smartphone': '#7c3aed',
-      'Tablet': '#0891b2',
-      'Camera': '#ea580c',
-      'Drone': '#16a34a',
-      'Keyboard': '#e11d48',
-      'Mouse': '#4338ca'
+      Earphone: "#6366f1",
+      Watch: "#f59e0b",
+      Laptop: "#dc2626",
+      Gaming: "#374151",
+      "VR Headset": "#059669",
+      Speaker: "#2563eb",
+      Smartphone: "#7c3aed",
+      Tablet: "#0891b2",
+      Camera: "#ea580c",
+      Drone: "#16a34a",
+      Keyboard: "#e11d48",
+      Mouse: "#4338ca",
     };
-    
-    const color = colors[title] || '#6b7280';
-    return `data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='240' viewBox='0 0 300 240'%3E%3Crect width='300' height='240' fill='${encodeURIComponent(color)}'/%3E%3Ctext x='50%25' y='50%25' dominant-baseline='middle' text-anchor='middle' font-size='18' fill='%23ffffff' font-family='system-ui'%3E${encodeURIComponent(title)}%3C/text%3E%3C/svg%3E`;
+    const color = colors[title] || "#6b7280";
+    return `data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='240' viewBox='0 0 300 240'%3E%3Crect width='300' height='240' fill='${encodeURIComponent(
+      color
+    )}'/%3E%3Ctext x='50%25' y='50%25' dominant-baseline='middle' text-anchor='middle' font-size='18' fill='%23ffffff' font-family='system-ui'%3E${encodeURIComponent(
+      title
+    )}%3C/text%3E%3C/svg%3E`;
   };
 
   const renderStars = (rating) => {
-    return Array.from({length: 5}).map((_, i) => (
-      <span key={i} className={`text-yellow-400 ${i < Math.floor(rating) ? 'opacity-100' : 'opacity-30'}`}>
+    return Array.from({ length: 5 }).map((_, i) => (
+      <motion.span
+        key={i}
+        className={`text-yellow-400 ${i < Math.floor(rating) ? "opacity-100" : "opacity-30"}`}
+        initial={{ opacity: 0 }}
+        animate={{ opacity: i < Math.floor(rating) ? 1 : 0.3 }}
+        transition={{ duration: 0.5, delay: i * 0.1 }}
+      >
         ★
-      </span>
+      </motion.span>
     ));
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-gray-100">
-      {/* Enhanced Animated Background */}
-      <div className="fixed inset-0 overflow-hidden pointer-events-none">
-        <div className="absolute top-1/4 left-1/4 w-64 h-64 bg-blue-400 rounded-full mix-blend-multiply filter blur-xl opacity-20 animate-pulse"></div>
-        <div className="absolute top-3/4 right-1/4 w-64 h-64 bg-purple-400 rounded-full mix-blend-multiply filter blur-xl opacity-20 animate-pulse" style={{animationDelay: '2s'}}></div>
-        <div className="absolute bottom-1/4 left-1/2 w-64 h-64 bg-pink-400 rounded-full mix-blend-multiply filter blur-xl opacity-20 animate-pulse" style={{animationDelay: '4s'}}></div>
-        <div className="absolute top-1/2 right-1/3 w-48 h-48 bg-green-400 rounded-full mix-blend-multiply filter blur-xl opacity-15 animate-pulse" style={{animationDelay: '3s'}}></div>
-      </div>
+    <motion.div
+      className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-gray-100 relative"
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ duration: 1 }}
+    >
+      {/* Animated Background Blobs */}
+      <motion.div className="fixed inset-0 overflow-hidden pointer-events-none">
+        {[
+          { top: "25%", left: "25%", color: "bg-blue-400" },
+          { top: "75%", right: "25%", color: "bg-purple-400" },
+          { bottom: "25%", left: "50%", color: "bg-pink-400" },
+          { top: "50%", right: "33%", color: "bg-green-400" },
+        ].map((blob, i) => (
+          <motion.div
+            key={i}
+            className={`absolute w-64 h-64 ${blob.color} rounded-full mix-blend-multiply filter blur-xl`}
+            initial={{ opacity: 0, scale: 0.8 }}
+            animate={{ opacity: 0.2, scale: [1, 1.2, 1] }}
+            transition={{ duration: 2, delay: i * 0.5, repeat: Infinity, repeatType: "reverse" }}
+            style={{
+              top: blob.top,
+              left: blob.left,
+              right: blob.right,
+              bottom: blob.bottom,
+            }}
+          />
+        ))}
+      </motion.div>
 
       <div className="relative z-10">
         {/* Hero Section with Rotating Images */}
-        <div className="relative py-32 overflow-hidden">
-          <div className="absolute inset-0 bg-gradient-to-r from-blue-900 via-purple-900 to-indigo-900"></div>
-          
-          {/* Hero Background Image */}
-          <div className="absolute inset-0 opacity-30">
-            <img 
-              src={heroImages[currentHeroImage]}
-              alt="Hero Product"
-              className="w-full h-full object-cover transition-opacity duration-1000"
-              onError={(e) => {
-                e.target.src = getFallbackImage('Electronics');
-              }}
-            />
-            <div className="absolute inset-0 bg-gradient-to-r from-blue-900/80 to-purple-900/80"></div>
-          </div>
+        <motion.div
+          className="relative py-32 overflow-hidden"
+          initial={{ opacity: 0, y: 50 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8 }}
+        >
+          <div className="absolute inset-0 bg-gradient-to-r from-blue-900 via-purple-900 to-indigo-900" />
+          <AnimatePresence mode="wait">
+            <motion.div
+              key={currentHeroImage}
+              className="absolute inset-0 opacity-30"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 0.3 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 1 }}
+            >
+              <img
+                src={heroImages[currentHeroImage]}
+                alt="Hero Product"
+                className="w-full h-full object-cover"
+                onError={(e) => {
+                  e.target.src = getFallbackImage("Electronics");
+                }}
+              />
+              <div className="absolute inset-0 bg-gradient-to-r from-blue-900/80 to-purple-900/80" />
+            </motion.div>
+          </AnimatePresence>
 
           <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl relative z-10">
             <div className="text-center text-white">
-              <div className="inline-block mb-6 animate-bounce">
+              <motion.div
+                className="inline-block mb-6"
+                initial={{ y: 20, opacity: 0 }}
+                animate={{ y: 0, opacity: 1 }}
+                transition={{ duration: 0.5, type: "spring", stiffness: 100 }}
+              >
                 <span className="px-6 py-3 bg-gradient-to-r from-blue-500 to-purple-500 text-white text-sm font-bold rounded-full shadow-lg">
                   ✨ New Collection 2025
                 </span>
-              </div>
-              <h1 className="text-6xl sm:text-7xl lg:text-8xl font-black mb-8 leading-tight">
+              </motion.div>
+              <motion.h1
+                className="text-6xl sm:text-7xl lg:text-8xl font-black mb-8 leading-tight"
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, delay: 0.2 }}
+              >
                 Future of{" "}
-                <span className="bg-gradient-to-r from-cyan-400 via-blue-500 to-purple-600 bg-clip-text text-transparent animate-pulse">
+                <span className="bg-gradient-to-r from-cyan-400 via-blue-500 to-purple-600 bg-clip-text text-transparent">
                   Electronics
                 </span>
-              </h1>
-              <p className="text-2xl text-gray-200 max-w-3xl mx-auto mb-12 leading-relaxed">
+              </motion.h1>
+              <motion.p
+                className="text-2xl text-gray-200 max-w-3xl mx-auto mb-12 leading-relaxed"
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, delay: 0.4 }}
+              >
                 Experience tomorrow's technology today with our cutting-edge collection of premium electronics
-              </p>
-              
+              </motion.p>
+
               {/* Hero CTA Buttons */}
-              <div className="flex flex-col sm:flex-row gap-6 justify-center items-center">
+              <motion.div
+                className="flex flex-col sm:flex-row gap-6 justify-center items-center"
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, delay: 0.6 }}
+              >
                 <Button
                   text="Explore Collection"
                   bgColor="bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-600 hover:to-blue-700"
                   textColor="text-white"
-                  className="px-10 py-4 rounded-2xl font-bold text-lg shadow-2xl transform hover:scale-105 transition-all duration-300"
+                  className="px-10 py-4 rounded-2xl font-bold text-lg shadow-2xl"
                 >
-                  <svg className="w-6 h-6 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
-                  </svg>
+                  <motion.svg
+                    className="w-6 h-6 ml-2"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                    whileHover={{ x: 5 }}
+                    transition={{ type: "spring", stiffness: 300 }}
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M13 7l5 5m0 0l-5 5m5-5H6"
+                    />
+                  </motion.svg>
                 </Button>
-                
                 <Button
                   text="Watch Demo"
                   bgColor="bg-white/10 hover:bg-white/20 backdrop-blur-sm border-2 border-white/30"
                   textColor="text-white"
-                  className="px-10 py-4 rounded-2xl font-bold text-lg shadow-2xl transform hover:scale-105 transition-all duration-300"
+                  className="px-10 py-4 rounded-2xl font-bold text-lg shadow-2xl"
                 >
-                  <svg className="w-6 h-6 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14.828 14.828a4 4 0 01-5.656 0M9 10h1m4 0h1m-6 4h8m-3-11l3 3-3 3" />
-                  </svg>
+                  <motion.svg
+                    className="w-6 h-6 ml-2"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                    whileHover={{ x: 5 }}
+                    transition={{ type: "spring", stiffness: 300 }}
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M14.828 14.828a4 4 0 01-5.656 0M9 10h1m4 0h1m-6 4h8m-3-11l3 3-3 3"
+                    />
+                  </motion.svg>
                 </Button>
-              </div>
+              </motion.div>
 
               {/* Hero Image Indicators */}
-              <div className="flex justify-center space-x-2 mt-12">
+              <motion.div
+                className="flex justify-center space-x-2 mt-12"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ duration: 0.5, delay: 0.8 }}
+              >
                 {heroImages.map((_, index) => (
-                  <button
+                  <motion.button
                     key={index}
                     className={`w-3 h-3 rounded-full transition-all duration-300 ${
-                      currentHeroImage === index ? 'bg-white scale-125' : 'bg-white/50 hover:bg-white/75'
+                      currentHeroImage === index ? "bg-white scale-125" : "bg-white/50 hover:bg-white/75"
                     }`}
                     onClick={() => setCurrentHeroImage(index)}
+                    whileHover={{ scale: 1.2 }}
+                    whileTap={{ scale: 0.9 }}
                   />
                 ))}
-              </div>
+              </motion.div>
             </div>
           </div>
-        </div>
+        </motion.div>
 
         {/* Product Categories Section */}
-        <div className="py-24 relative">
+        <motion.div
+          className="py-24 relative"
+          initial={{ opacity: 0, y: 50 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8 }}
+        >
           <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl">
             {/* Section Header */}
-            <div className="text-center mb-20">
-              <div className="inline-block mb-4">
+            <motion.div
+              className="text-center mb-20"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6 }}
+            >
+              <motion.div
+                className="inline-block mb-4"
+                initial={{ opacity: 0, scale: 0.8 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ duration: 0.5, type: "spring", stiffness: 100 }}
+              >
                 <span className="px-4 py-2 bg-blue-100 text-blue-800 text-sm font-semibold rounded-full">
                   🔥 Best Sellers
                 </span>
-              </div>
-              <h2 className="text-5xl sm:text-6xl lg:text-7xl font-black text-gray-900 mb-6 leading-tight">
+              </motion.div>
+              <motion.h2
+                className="text-5xl sm:text-6xl lg:text-7xl font-black text-gray-900 mb-6 leading-tight"
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, delay: 0.2 }}
+              >
                 Top{" "}
                 <span className="bg-gradient-to-r from-blue-600 via-purple-600 to-blue-800 bg-clip-text text-transparent">
                   Electronics
                 </span>
-              </h2>
-              <p className="text-xl text-gray-600 max-w-2xl mx-auto leading-relaxed">
+              </motion.h2>
+              <motion.p
+                className="text-xl text-gray-600 max-w-2xl mx-auto leading-relaxed"
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, delay: 0.4 }}
+              >
                 Discover our most popular gadgets loved by thousands of customers worldwide
-              </p>
-            </div>
+              </motion.p>
+            </motion.div>
 
             {/* Enhanced Product Grid */}
-            <div className={`grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 transition-all duration-1000 ${animateCards ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
-              {productCategories.map((product, index) => (
-                <div
-                  key={product.id}
-                  className={`${product.span || ''} group relative h-96 overflow-hidden rounded-3xl shadow-2xl cursor-pointer transform transition-all duration-500 hover:scale-[1.02] hover:-translate-y-2 ${hoveredCard === product.id ? 'z-20' : 'z-10'}`}
-                  style={{
-                    animationDelay: `${index * 100}ms`,
-                  }}
-                  onMouseEnter={() => setHoveredCard(product.id)}
-                  onMouseLeave={() => setHoveredCard(null)}
-                >
-                  {/* Background Gradient */}
-                  <div className={`absolute inset-0 bg-gradient-to-br ${product.gradient}`}></div>
-                  
-                  {/* Enhanced Pattern Overlay */}
-                  {getPatternOverlay(product.pattern, product.accent)}
-                  
-                  {/* Shine Effect */}
-                  <div className="absolute inset-0 bg-gradient-to-tr from-transparent via-white to-transparent opacity-0 group-hover:opacity-20 transform -translate-x-full group-hover:translate-x-full transition-all duration-1000"></div>
-                  
-                  {/* Content Container */}
-                  <div className="relative h-full flex flex-col justify-between p-8">
-                    {/* Top Section with Rating */}
-                    <div className="flex justify-between items-start">
-                      <div>
-                        <span className={`px-3 py-1 ${product.textColor} bg-white bg-opacity-20 backdrop-blur-sm text-xs font-bold rounded-full uppercase tracking-wider`}>
-                          {product.subtitle}
-                        </span>
-                        <div className={`mt-2 text-sm ${product.textColor} opacity-70 font-semibold`}>
-                          {product.price}
+            <motion.div
+              className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8"
+              animate={{ opacity: animateCards ? 1 : 0, y: animateCards ? 0 : 20 }}
+              transition={{ duration: 1 }}
+            >
+              <AnimatePresence>
+                {productCategories.map((product, index) => (
+                  <motion.div
+                    key={product.id}
+                    className={`${product.span || ""} group relative h-96 overflow-hidden rounded-3xl shadow-2xl cursor-pointer`}
+                    initial={{ opacity: 0, scale: 0.9 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    exit={{ opacity: 0, scale: 0.9 }}
+                    transition={{ duration: 0.5, delay: index * 0.1, type: "spring", stiffness: 100 }}
+                    onMouseEnter={() => setHoveredCard(product.id)}
+                    onMouseLeave={() => setHoveredCard(null)}
+                    whileHover={{
+                      scale: 1.02,
+                      y: -8,
+                      boxShadow: "0px 15px 30px rgba(0, 0, 0, 0.3)",
+                    }}
+                  >
+                    <div className={`absolute inset-0 bg-gradient-to-br ${product.gradient}`} />
+                    {getPatternOverlay(product.pattern, product.accent)}
+                    <motion.div
+                      className="absolute inset-0 bg-gradient-to-tr from-transparent via-white to-transparent"
+                      initial={{ x: "-100%" }}
+                      animate={{ x: hoveredCard === product.id ? "100%" : "-100%" }}
+                      transition={{ duration: 1, ease: "easeInOut" }}
+                    />
+                    <div className="relative h-full flex flex-col justify-between p-8">
+                      <motion.div
+                        className="flex justify-between items-start"
+                        initial={{ opacity: 0, y: -10 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 0.5 }}
+                      >
+                        <div>
+                          <motion.span
+                            className={`px-3 py-1 ${product.textColor} bg-white bg-opacity-20 backdrop-blur-sm text-xs font-bold rounded-full uppercase tracking-wider`}
+                            initial={{ opacity: 0 }}
+                            animate={{ opacity: 1 }}
+                            transition={{ duration: 0.5 }}
+                          >
+                            {product.subtitle}
+                          </motion.span>
+                          <motion.div
+                            className={`mt-2 text-sm ${product.textColor} opacity-70 font-semibold`}
+                            initial={{ opacity: 0 }}
+                            animate={{ opacity: 1 }}
+                            transition={{ duration: 0.5, delay: 0.1 }}
+                          >
+                            {product.price}
+                          </motion.div>
+                          <motion.div
+                            className="mt-2 flex items-center space-x-2"
+                            initial={{ opacity: 0 }}
+                            animate={{ opacity: 1 }}
+                            transition={{ duration: 0.5, delay: 0.2 }}
+                          >
+                            <div className="flex">{renderStars(product.rating)}</div>
+                            <span className={`text-xs ${product.textColor} opacity-60`}>
+                              ({product.reviews.toLocaleString()})
+                            </span>
+                          </motion.div>
                         </div>
-                        {/* Rating Display */}
-                        <div className="mt-2 flex items-center space-x-2">
-                          <div className="flex">
-                            {renderStars(product.rating)}
-                          </div>
-                          <span className={`text-xs ${product.textColor} opacity-60`}>
-                            ({product.reviews.toLocaleString()})
-                          </span>
-                        </div>
-                      </div>
-                      <div className={`w-3 h-3 bg-white rounded-full opacity-60 group-hover:opacity-100 transition-opacity duration-300 animate-pulse`}></div>
-                    </div>
-
-                    {/* Enhanced Product Image */}
-                    <div className="absolute right-4 top-1/2 transform -translate-y-1/2 group-hover:scale-110 transition-transform duration-500">
-                      <div className="relative">
-                        <img
-                          src={imageErrors[product.id] ? getFallbackImage(product.title) : product.image}
-                          alt={product.title}
-                          loading="lazy"
-                          className="w-48 h-auto opacity-90 drop-shadow-2xl rounded-lg filter group-hover:brightness-110 transition-all duration-300"
-                          onError={() => handleImageError(product.id)}
+                        <motion.div
+                          className="w-3 h-3 bg-white rounded-full"
+                          initial={{ opacity: 0.6 }}
+                          animate={{ opacity: hoveredCard === product.id ? 1 : 0.6, scale: [1, 1.3, 1] }}
+                          transition={{ duration: 1, repeat: Infinity }}
                         />
-                        {/* Enhanced image overlay */}
-                        <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent rounded-lg group-hover:from-transparent transition-all duration-300"></div>
-                        
-                        {/* Product Badge */}
-                        <div className="absolute -top-2 -right-2 bg-red-500 text-white text-xs font-bold px-2 py-1 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300 animate-bounce">
-                          Hot!
-                        </div>
-                      </div>
-                    </div>
+                      </motion.div>
 
-                    {/* Enhanced Bottom Content */}
-                    <div className="space-y-4">
-                      <div>
-                        <h3 className={`text-4xl font-black ${product.textColor} mb-1 group-hover:scale-105 transform transition-transform duration-300`}>
-                          {product.title}
-                        </h3>
-                        <p className={`text-sm ${product.textColor} opacity-80 font-medium`}>
-                          {product.description}
-                        </p>
-                      </div>
-                      
-                      {/* Enhanced Button Section */}
-                      <div className="flex items-center space-x-3">
-                        <Button
-                          text="Shop Now"
-                          bgColor={product.buttonBg}
-                          textColor={product.buttonText}
-                          className="px-6 py-3 rounded-2xl font-bold text-sm shadow-lg border-2 border-white border-opacity-20 backdrop-blur-sm group-hover:scale-105 transition-all duration-300 flex items-center space-x-2"
-                          onClick={() => console.log(`Shopping ${product.title}`)}
-                        />
-                        
-                        {/* Enhanced Action Button */}
-                        <div className={`w-12 h-12 ${product.buttonBg} rounded-2xl flex items-center justify-center group-hover:rotate-12 transition-transform duration-300 shadow-lg cursor-pointer`}>
-                          <svg className="w-5 h-5 text-current" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                          </svg>
+                      <motion.div
+                        className="absolute right-4 top-1/2 transform -translate-y-1/2"
+                        animate={{
+                          scale: hoveredCard === product.id ? 1.1 : 1,
+                        }}
+                        transition={{ type: "spring", stiffness: 200 }}
+                      >
+                        <div className="relative">
+                          <img
+                            src={imageErrors[product.id] ? getFallbackImage(product.title) : product.image}
+                            alt={product.title}
+                            loading="lazy"
+                            className="w-48 h-auto opacity-90 drop-shadow-2xl rounded-lg filter group-hover:brightness-110"
+                            onError={() => handleImageError(product.id)}
+                          />
+                          <motion.div
+                            className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent rounded-lg"
+                            initial={{ opacity: 1 }}
+                            animate={{ opacity: hoveredCard === product.id ? 0 : 1 }}
+                            transition={{ duration: 0.3 }}
+                          />
+                          <motion.div
+                            className="absolute -top-2 -right-2 bg-red-500 text-white text-xs font-bold px-2 py-1 rounded-full"
+                            initial={{ opacity: 0, y: 10 }}
+                            animate={{ opacity: hoveredCard === product.id ? 1 : 0, y: hoveredCard === product.id ? 0 : 10 }}
+                            transition={{ duration: 0.3, type: "spring", stiffness: 200 }}
+                          >
+                            Hot!
+                          </motion.div>
                         </div>
-                      </div>
-                    </div>
-                  </div>
+                      </motion.div>
 
-                  {/* Hover Glow Effect */}
-                  <div className={`absolute inset-0 bg-white opacity-0 group-hover:opacity-10 transition-opacity duration-300 rounded-3xl`}></div>
-                </div>
-              ))}
-            </div>
+                      <motion.div
+                        className="space-y-4"
+                        initial={{ opacity: 0, y: 20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 0.5 }}
+                      >
+                        <div>
+                          <motion.h3
+                            className={`text-4xl font-black ${product.textColor} mb-1`}
+                            animate={{ scale: hoveredCard === product.id ? 1.05 : 1 }}
+                            transition={{ type: "spring", stiffness: 300 }}
+                          >
+                            {product.title}
+                          </motion.h3>
+                          <motion.p
+                            className={`text-sm ${product.textColor} opacity-80 font-medium`}
+                            initial={{ opacity: 0 }}
+                            animate={{ opacity: 1 }}
+                            transition={{ duration: 0.5, delay: 0.1 }}
+                          >
+                            {product.description}
+                          </motion.p>
+                        </div>
+                        <motion.div
+                          className="flex items-center space-x-3"
+                          initial={{ opacity: 0 }}
+                          animate={{ opacity: 1 }}
+                          transition={{ duration: 0.5, delay: 0.2 }}
+                        >
+                          <Button
+                            text="Shop Now"
+                            bgColor={product.buttonBg}
+                            textColor={product.buttonText}
+                            className="px-6 py-3 rounded-2xl font-bold text-sm shadow-lg border-2 border-white border-opacity-20 backdrop-blur-sm flex items-center space-x-2"
+                            onClick={() => console.log(`Shopping ${product.title}`)}
+                          />
+                          <motion.div
+                            className={`w-12 h-12 ${product.buttonBg} rounded-2xl flex items-center justify-center shadow-lg cursor-pointer`}
+                            animate={{ rotate: hoveredCard === product.id ? 12 : 0 }}
+                            transition={{ type: "spring", stiffness: 200 }}
+                          >
+                            <svg
+                              className="w-5 h-5 text-current"
+                              fill="none"
+                              stroke="currentColor"
+                              viewBox="0 0 24 24"
+                            >
+                              <path
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                                strokeWidth={2}
+                                d="M9 5l7 7-7 7"
+                              />
+                            </svg>
+                          </motion.div>
+                        </motion.div>
+                      </motion.div>
+                    </div>
+                    <motion.div
+                      className="absolute inset-0 bg-white rounded-3xl"
+                      initial={{ opacity: 0 }}
+                      animate={{ opacity: hoveredCard === product.id ? 0.1 : 0 }}
+                      transition={{ duration: 0.3 }}
+                    />
+                  </motion.div>
+                ))}
+              </AnimatePresence>
+            </motion.div>
 
             {/* Enhanced Stats Section */}
-            <div className="mt-32 grid grid-cols-2 md:grid-cols-4 gap-8">
+            <motion.div
+              className="mt-32 grid grid-cols-2 md:grid-cols-4 gap-8"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8 }}
+            >
               {[
                 { number: "50K+", label: "Happy Customers", icon: "👥", color: "from-blue-500 to-cyan-500" },
                 { number: "1000+", label: "Products", icon: "📱", color: "from-purple-500 to-pink-500" },
                 { number: "99%", label: "Satisfaction", icon: "⭐", color: "from-green-500 to-emerald-500" },
-                { number: "24/7", label: "Support", icon: "🛟", color: "from-orange-500 to-red-500" }
+                { number: "24/7", label: "Support", icon: "🛟", color: "from-orange-500 to-red-500" },
               ].map((stat, index) => (
-                <div key={index} className="group text-center p-8 bg-white rounded-3xl shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:scale-105 border border-gray-100">
-                  <div className={`inline-flex items-center justify-center w-16 h-16 bg-gradient-to-r ${stat.color} rounded-2xl mb-4 text-2xl group-hover:rotate-12 transition-transform duration-300`}>
+                <motion.div
+                  key={index}
+                  className="group text-center p-8 bg-white rounded-3xl shadow-lg border border-gray-100"
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.5, delay: index * 0.1, type: "spring", stiffness: 100 }}
+                  whileHover={{
+                    scale: 1.05,
+                    boxShadow: "0px 15px 30px rgba(0, 0, 0, 0.2)",
+                    transition: { type: "spring", stiffness: 200 },
+                  }}
+                >
+                  <motion.div
+                    className={`inline-flex items-center justify-center w-16 h-16 bg-gradient-to-r ${stat.color} rounded-2xl mb-4 text-2xl`}
+                    animate={{ rotate: [0, 12, 0] }}
+                    transition={{ duration: 1, repeat: Infinity }}
+                  >
                     {stat.icon}
-                  </div>
-                  <div className="text-4xl font-black text-gray-900 mb-2 group-hover:text-blue-600 transition-colors duration-300">{stat.number}</div>
+                  </motion.div>
+                  <motion.div
+                    className="text-4xl font-black text-gray-900 mb-2"
+                    animate={{ color: hoveredCard ? "#2563eb" : "#111827" }}
+                    transition={{ duration: 0.3 }}
+                  >
+                    {stat.number}
+                  </motion.div>
                   <div className="text-gray-600 font-semibold">{stat.label}</div>
-                </div>
+                </motion.div>
               ))}
-            </div>
+            </motion.div>
 
             {/* Enhanced Call to Action Section */}
-            <div className="text-center mt-32">
-              <div className="relative inline-flex items-center space-x-6 bg-gradient-to-r from-blue-600 to-purple-600 rounded-3xl p-8 shadow-2xl text-white overflow-hidden">
-                {/* Background Animation */}
-                <div className="absolute inset-0 bg-gradient-to-r from-blue-600 via-purple-600 to-blue-600 bg-size-200 animate-gradient-x"></div>
-                
-                <div className="relative z-10 flex items-center space-x-6">
-                  <div className="flex -space-x-2">
-                    <div className="w-12 h-12 bg-gradient-to-r from-cyan-400 to-blue-500 rounded-full flex items-center justify-center text-white font-bold text-lg animate-bounce">+</div>
-                    <div className="w-12 h-12 bg-gradient-to-r from-purple-400 to-pink-500 rounded-full flex items-center justify-center text-white font-bold text-lg animate-bounce" style={{animationDelay: '0.5s'}}>★</div>
-                    <div className="w-12 h-12 bg-gradient-to-r from-pink-400 to-red-500 rounded-full flex items-center justify-center text-white font-bold text-lg animate-bounce" style={{animationDelay: '1s'}}>♦</div>
-                  </div>
-                  
-                  <div className="text-left">
+            <motion.div
+              className="text-center mt-32"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8 }}
+            >
+              <motion.div
+                className="relative inline-flex items-center space-x-6 bg-gradient-to-r from-blue-600 via-purple-600 to-blue-600 rounded-3xl p-8 shadow-2xl text-white overflow-hidden"
+                animate={{
+                  backgroundPosition: ["0% 50%", "200% 50%", "0% 50%"],
+                }}
+                transition={{ duration: 3, repeat: Infinity, ease: "linear" }}
+                style={{ backgroundSize: "200% 200%" }}
+                whileHover={{ scale: 1.02 }}
+              >
+                <motion.div
+                  className="relative z-10 flex items-center space-x-6"
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  transition={{ duration: 0.5 }}
+                >
+                  <motion.div className="flex -space-x-2">
+                    {[
+                      { icon: "+", color: "from-cyan-400 to-blue-500", delay: 0 },
+                      { icon: "★", color: "from-purple-400 to-pink-500", delay: 0.5 },
+                      { icon: "♦", color: "from-pink-400 to-red-500", delay: 1 },
+                    ].map((item, i) => (
+                      <motion.div
+                        key={i}
+                        className={`w-12 h-12 bg-gradient-to-r ${item.color} rounded-full flex items-center justify-center text-white font-bold text-lg`}
+                        animate={{ y: [-10, 10] }}
+                        transition={{ duration: 1, delay: item.delay, repeat: Infinity, repeatType: "reverse" }}
+                      >
+                        {item.icon}
+                      </motion.div>
+                    ))}
+                  </motion.div>
+                  <motion.div
+                    className="text-left"
+                    initial={{ opacity: 0, x: -20 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ duration: 0.5 }}
+                  >
                     <p className="text-white font-bold text-xl mb-1">Ready to explore more?</p>
                     <p className="text-white/80 text-sm">Join 50,000+ satisfied customers worldwide</p>
-                  </div>
-                  
+                  </motion.div>
                   <Button
                     text="View All Products"
                     bgColor="bg-white hover:bg-gray-50"
                     textColor="text-blue-600"
-                    className="px-8 py-4 rounded-2xl font-bold shadow-lg transform hover:scale-105 transition-all duration-300"
+                    className="px-8 py-4 rounded-2xl font-bold shadow-lg"
                   >
-                    <svg className="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
-                    </svg>
+                    <motion.svg
+                      className="w-5 h-5 ml-2"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                      whileHover={{ x: 5 }}
+                      transition={{ type: "spring", stiffness: 300 }}
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={2}
+                        d="M13 7l5 5m0 0l-5 5m5-5H6"
+                      />
+                    </motion.svg>
                   </Button>
-                </div>
-              </div>
-            </div>
+                </motion.div>
+              </motion.div>
+            </motion.div>
 
             {/* New Features Section */}
-            <div className="mt-32 grid grid-cols-1 md:grid-cols-3 gap-8">
+            <motion.div
+              className="mt-32 grid grid-cols-1 md:grid-cols-3 gap-8"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8 }}
+            >
               {[
                 {
                   title: "Free Shipping",
                   description: "Free delivery on orders over $99",
                   icon: "🚚",
-                  gradient: "from-blue-500 to-cyan-500"
+                  gradient: "from-blue-500 to-cyan-500",
                 },
                 {
                   title: "1 Year Warranty",
                   description: "Comprehensive protection for all products",
                   icon: "🛡️",
-                  gradient: "from-green-500 to-emerald-500"
+                  gradient: "from-green-500 to-emerald-500",
                 },
                 {
                   title: "Easy Returns",
                   description: "30-day hassle-free return policy",
                   icon: "↩️",
-                  gradient: "from-purple-500 to-pink-500"
-                }
+                  gradient: "from-purple-500 to-pink-500",
+                },
               ].map((feature, index) => (
-                <div key={index} className="group text-center p-8 bg-white rounded-3xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2 border border-gray-100">
-                  <div className={`inline-flex items-center justify-center w-20 h-20 bg-gradient-to-r ${feature.gradient} rounded-3xl mb-6 text-3xl group-hover:scale-110 transition-transform duration-300 shadow-lg`}>
+                <motion.div
+                  key={index}
+                  className="group text-center p-8 bg-white rounded-3xl shadow-lg border border-gray-100"
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.5, delay: index * 0.1, type: "spring", stiffness: 100 }}
+                  whileHover={{
+                    scale: 1.05,
+                    y: -8,
+                    boxShadow: "0px 15px 30px rgba(0, 0, 0, 0.2)",
+                  }}
+                >
+                  <motion.div
+                    className={`inline-flex items-center justify-center w-20 h-20 bg-gradient-to-r ${feature.gradient} rounded-3xl mb-6 text-3xl shadow-lg`}
+                    animate={{ scale: [1, 1.1, 1] }}
+                    transition={{ duration: 1, repeat: Infinity }}
+                  >
                     {feature.icon}
-                  </div>
-                  <h3 className="text-2xl font-bold text-gray-900 mb-3 group-hover:text-blue-600 transition-colors duration-300">{feature.title}</h3>
+                  </motion.div>
+                  <motion.h3
+                    className="text-2xl font-bold text-gray-900 mb-3"
+                    animate={{ color: hoveredCard ? "#2563eb" : "#111827" }}
+                    transition={{ duration: 0.3 }}
+                  >
+                    {feature.title}
+                  </motion.h3>
                   <p className="text-gray-600 leading-relaxed">{feature.description}</p>
-                </div>
+                </motion.div>
               ))}
-            </div>
+            </motion.div>
           </div>
-        </div>
+        </motion.div>
       </div>
-
-      <style jsx>{`
-        @keyframes gradient-x {
-          0%, 100% {
-            background-size: 200% 200%;
-            background-position: left center;
-          }
-          50% {
-            background-size: 200% 200%;
-            background-position: right center;
-          }
-        }
-        
-        .animate-gradient-x {
-          animation: gradient-x 3s ease infinite;
-        }
-      `}</style>
-    </div>
+    </motion.div>
   );
 };
 
